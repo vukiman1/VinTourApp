@@ -8,7 +8,7 @@ import LoginImg from "../assets/images/dulichviet.jpeg";
 import usericon from "../assets/images/user.png";
 
 const Login = () => {
-  window.scrollTo({ top: 130, behavior: 'smooth' })
+  window.scrollTo({ top: 130, behavior: "smooth" });
   const [credentials, setCredentials] = useState({
     email: undefined,
     password: undefined,
@@ -58,7 +58,7 @@ const Login = () => {
                       className="btn secondary__btn auth_btn"
                       type="submit"
                     >
-                      Đăng nhập
+                      Đăng nhập heheh
                     </Button>
                   </Form>
                   <p>
