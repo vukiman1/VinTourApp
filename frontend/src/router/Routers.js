@@ -8,6 +8,7 @@ import SearchResultList from "./../pages/SearchResultList";
 import Reagister from "../pages/Register";
 import Login from "./../pages/Login";
 import ThankYou from "../pages/ThankYou";
+import Admin from "../pages/Admin";
 
 const Routers = () => {
   return (
@@ -20,6 +21,7 @@ const Routers = () => {
       <Route path="/register" element={<Reagister />} />
       <Route path="/thank-you" element={<ThankYou />} />
       <Route path="/tours/search" element={<SearchResultList />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 };
