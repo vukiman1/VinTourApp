@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/home.css";
 import { Container, Row, Col } from "reactstrap";
 import heroImg from "../assets/images/anhhanoi.jpg";
@@ -15,10 +15,13 @@ import FeatureTourList from "../components/Featured-tours/FeatureTourList";
 import MasonryImagesGallery from "../components/Imagae-gallery/MasonryImagesGallery";
 import Testimonials from "../components/Testimonial/Testimonials";
 import Newsletter from "../shared/Newsletter";
-import ButonScroll from "../ButonScroll"
-  
+import ButonScroll from "../ButonScroll";
+
 const Home = () => {
-  {window.scrollTo({ top: 0, behavior: 'smooth' })}
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+  console.log("Tét");
 
   return (
     <>
@@ -170,7 +173,6 @@ const Home = () => {
       <Newsletter></Newsletter>
       <ButonScroll></ButonScroll>
     </>
-    
   );
 };
 

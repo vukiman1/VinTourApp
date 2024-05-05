@@ -13,26 +13,30 @@ import Admin from "./pages/Admin";
 
 function App() {
   const componentWithLayout = (cpn) => {
-    return <Layout cpn={cpn}></Layout>;
+    return (
+      <>
+        <Layout cpn={cpn} />
+      </>
+    );
   };
   return (
     <div>
       <Routes>
         <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/home" element={componentWithLayout(<Home />)} />
-        <Route path="/tours" element={componentWithLayout(<Tours />)} />
+        <Route path="home" element={componentWithLayout(<Home />)} />
+        <Route path="tours" element={componentWithLayout(<Tours />)} />
         <Route
-          path="/tours/:id"
+          path="tours/:id"
           element={componentWithLayout(<TourDetails />)}
         />
-        <Route path="/login" element={componentWithLayout(<Login />)} />
-        <Route path="/register" element={componentWithLayout(<Register />)} />
-        <Route path="/thank-you" element={componentWithLayout(<ThankYou />)} />
+        <Route path="login" element={componentWithLayout(<Login />)} />
+        <Route path="register" element={componentWithLayout(<Register />)} />
+        <Route path="thank-you" element={componentWithLayout(<ThankYou />)} />
         <Route
-          path="/tours/search"
+          path="tours/search"
           element={componentWithLayout(<SearchResultList />)}
         />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="admin" element={<Admin />} />
       </Routes>
     </div>
   );
