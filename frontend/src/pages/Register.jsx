@@ -7,8 +7,8 @@ import "../styles/login.css";
 // import registerImg from "../assets/images/register.png";
 import usericon from "../assets/images/user.png";
 
-const Reagister = () => {
-  window.scrollTo({ top: 130, behavior: 'smooth' })
+const Register = () => {
+  window.scrollTo({ top: 130, behavior: "smooth" });
   const [credentials, setCredentials] = useState({
     userNname: undefined,
     email: undefined,
@@ -84,4 +84,4 @@ const Reagister = () => {
   );
 };
 
-export default Reagister;
+export default Register;

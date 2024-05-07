@@ -1,5 +1,7 @@
 import React from "react";
 import { Col, Row } from "antd";
+import { NavLink, Link } from "react-router-dom";
+
 import {
   WrapperHeader,
   WrapperHeaderAccount,
@@ -29,7 +31,10 @@ const HeaderComponent = () => {
             <UserOutlined style={{ fontSize: "30px", color: "#fff" }} />
 
             <div>
-              <WrapperTextHeaderSmall>Đăng nhập/Đăng kí</WrapperTextHeaderSmall>
+              <WrapperTextHeaderSmall>
+                <Link to="/login">Đăng nhập</Link>/
+                <Link to="/login">Đăng ký</Link>
+              </WrapperTextHeaderSmall>
               <div>
                 <WrapperTextHeaderSmall>Tài khoản</WrapperTextHeaderSmall>
                 <CaretDownOutlined />
