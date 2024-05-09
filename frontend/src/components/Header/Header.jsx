@@ -1,9 +1,12 @@
-import React from "react";
+import { React, useContext } from "react";
 import { Container, Row, Button } from "reactstrap";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 
 import logo from "../../assets/images/logo1.png";
 import "./header.css";
+
+import { AuthContext } from "../../context/AuthContext";
+
 const nav__links = [
   {
     path: "/home",
@@ -16,6 +19,14 @@ const nav__links = [
   },
 ];
 const Header = () => {
+  const navigate = useNavigate();
+  const { user, dispatch } = useContext(AuthContext);
+
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
+  };
+
   return (
     <header className="header">
       <Container>
@@ -26,7 +37,9 @@ const Header = () => {
           >
             {/* ============ logo =============  */}
             <div className="logo">
-              <Link to="/home"><img src={logo} alt="" /></Link>
+              <Link to="/home">
+                <img src={logo} alt="" />
+              </Link>
             </div>
             {/* ============ logo end =============  */}
             {/* ============ menu start=============  */}
@@ -50,12 +63,23 @@ const Header = () => {
 
             <div className="nav_rigth d-flex align-items-center gap-4">
               <div className="nav_btns d-flex align-items-center gap-4">
-                <Button className="btn secondary__btn">
-                  <Link to="/login">Đăng nhập</Link>
-                </Button>
-                <Button className="btn primary__btn">
-                  <Link to="/register">Đăng ký</Link>
-                </Button>
+                {user ? (
+                  <>
+                    <h5 className="mb-0">{user.username}</h5>
+                    <Button className="btn btn-dark" onClick={logout}>
+                      Đăng xuất
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button className="btn secondary__btn">
+                      <Link to="/login">Đăng nhập</Link>
+                    </Button>
+                    <Button className="btn primary__btn">
+                      <Link to="/register">Đăng ký</Link>
+                    </Button>
+                  </>
+                )}
 
                 <div>
                   <span className="mobile_menu">

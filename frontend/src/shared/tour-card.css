@@ -3,10 +3,10 @@
   border-radius: 5px 5px 0 0;
 }
 .tour-card {
-  transition: transform 0.3s;
+  transition: transform 0.4s;
 }
 .tour-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 .CardBody {
   position: relative;
