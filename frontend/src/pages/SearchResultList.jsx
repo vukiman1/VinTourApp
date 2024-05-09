@@ -18,12 +18,12 @@ const SearchResultList = () => {
             {data.length === 0 ? (
               <h4 className="text-center">No tour found</h4>
             ) : (
-              data?.map((tour) => {
+              data?.map((tour) => (
                 <Col lg="3" className="mb-4" key={tour._id}>
                   {console.log(tour)}
                   <TourCard tour={tour} />
-                </Col>;
-              })
+                </Col>
+              ))
             )}
           </Row>
         </Container>
