@@ -1,35 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./booking.css";
 import formatPrice from "../../hooks/formatPrice";
 import { Form, FormGroup, ListGroup, ListGroupItem, Button } from "reactstrap";
 
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { BASE_URL } from "../../utils/config";
 
 const Booking = ({ tour, avgRating }) => {
-  const { price, reviews } = tour;
+  const { price, reviews, title } = tour;
   const navigate = useNavigate();
 
-  const [credentials, setCredentials] = useState({
-    userId: "01",
-    userEmail: "abc@gmail.com",
+  const { user } = useContext(AuthContext);
+
+  const [booking, setBooking] = useState({
+    userId: user && user._id,
+    userEmail: user && user.email,
+    tourName: title,
     fullName: "",
     phone: "",
     guestSize: 1,
-    bookat: "",
+    bookAt: "",
   });
 
   const handleChange = (e) => {
-    setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    setBooking((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
   // const priceNumber = parseFloat(price.replace(/\./g, ''));
-  const totalAmount = price * Number(credentials.guestSize);
-  const totalAmountvnd = totalAmount.toLocaleString("vi-VN");
+  const totalAmount = price * Number(booking.guestSize);
 
   // send data to sever
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
+    console.log(booking);
+    try {
+      if (!user || user === undefined || user === null) {
+        alert("Please sign in");
+        return navigate("/login");
+      }
+      const res = await fetch(`${BASE_URL}/booking`, {
+        method: "post",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(booking),
+      });
+      const result = await res.json();
 
-    navigate("/thank-you");
+      if (!res.ok) {
+        console.log("????");
+        return alert(result.message);
+      }
+      navigate("/thank-you");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -70,7 +96,7 @@ const Booking = ({ tour, avgRating }) => {
             <input
               type="date"
               placeholder=" "
-              id="bookat"
+              id="bookAt"
               required
               onChange={handleChange}
             />
@@ -97,7 +123,7 @@ const Booking = ({ tour, avgRating }) => {
           </ListGroupItem>
           <ListGroupItem className="border-0 px-0 total">
             <h5>Tổng</h5>
-            <span>{totalAmountvnd} vnđ</span>
+            <span>{formatPrice(totalAmount)} vnđ</span>
           </ListGroupItem>
         </ListGroup>
 

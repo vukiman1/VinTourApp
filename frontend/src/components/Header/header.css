@@ -1,64 +1,89 @@
-
-
-
-.header{
-    width: 100%;
-    height: 80px;
-    line-height: 80px;
-    position: sticky;
-    top: 0px;
-    background-color: rgb(255, 255, 255);
-    z-index: 2;
+.header {
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+  position: sticky;
+  top: 0px;
+  background-color: rgb(255, 255, 255);
+  z-index: 2;
 }
-.logo
-{
-    max-width: 250px
+.logo {
+  max-width: 250px;
 }
-.logo img{
-    width: 40%;
+.logo img {
+  width: 40%;
 }
 
 .menu {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
-.nav_item a{
-    text-decoration: none;
-    color: var(--hedaing-color);
-    font-weight: 500;
-    font-size: 1.1rem;
+.nav_item a {
+  text-decoration: none;
+  color: var(--hedaing-color);
+  font-weight: 500;
+  font-size: 1.1rem;
 }
 
-.nav_item a:hover{
-    color: inherit;
+.nav_item a:hover {
+  color: inherit;
 }
-.nav_item a.active_link
-{
-    color: var(--secondary-color);
-}
-
-.mobile_menu
-{
-    font-size: 1.3rem;
-    color: var(--heading-color);
-    display: none;
+.nav_item a.active_link {
+  color: var(--secondary-color);
 }
 
-.sticky_header
-{
-    width: 100%;
-    height: 80px;
-    line-height: 80px;
-    background: #fff;
-    position: sticky;
-    top:0;
-    left: 0;
-    box-shadow: 3px 3px 8px -3px #ddd;
-    z-index: 999;
+.mobile_menu {
+  font-size: 1.3rem;
+  color: var(--heading-color);
+  display: none;
 }
-.btn li a
-{
-    text-decoration: none;
-    color: black;
 
+.sticky_header {
+  width: 100%;
+  height: 80px;
+  line-height: 80px;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  box-shadow: 3px 3px 8px -3px #ddd;
+  z-index: 999;
+}
+.btn li a {
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 120px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  list-style-type: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  top: 85%;
+  right: 12%;
+}
+
+.dropdown-menu li {
+  max-height: 40px;
+}
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}
+.dropdown-menu a {
+  position: relative;
+  bottom: 20px;
+  text-decoration: none;
+  color: #333333;
+}
+.dropdown-menu a:hover {
+  color: #555555;
+}
+ul.dropdown-menu {
+  text-align: center;
 }

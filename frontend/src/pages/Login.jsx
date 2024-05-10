@@ -12,6 +12,7 @@ import { BASE_URL } from "../utils/config";
 
 const Login = () => {
   window.scrollTo({ top: 130, behavior: "smooth" });
+
   const [credentials, setCredentials] = useState({
     email: undefined,
     password: undefined,
@@ -39,13 +40,15 @@ const Login = () => {
 
       const result = await res.json();
 
-      if (!res.ok) alert(result.message);
-      console.log(result);
-      dispatch({ type: "LOGIN_SUCCESS", payload: result.data });
+      if (!res.ok) return alert("Sai tên đăng nhập hoặc mật khẩu!");
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: { user: result.data, role: result.role },
+      });
       alert(`Đăng nhập thành công!`);
       navigate("/");
     } catch (err) {
-      alert(`Đăng nhập thất bại!`);
+      alert(`Lỗi máy chủ, đăng nhập thất bại!`);
       dispatch({ type: "LOGIN_FAILURE", payload: err.message });
     }
   };

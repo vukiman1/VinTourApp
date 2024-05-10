@@ -34,9 +34,10 @@ const Register = () => {
         },
         body: JSON.stringify(credentials),
       });
-      const result = await res.json();
+      // const result = await res.json();
 
-      if (!res.ok) alert(result.message);
+      if (!res.ok)
+        return alert("Đã tồn tại tên đăng nhập hoặc email, vui lòng thử lại!");
       dispatch({ type: "REGISTER_SUCCESS" });
       alert(`Tạo thành công tài khoản`);
       navigate("/login");
