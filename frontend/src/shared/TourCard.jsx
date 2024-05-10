@@ -5,7 +5,6 @@ import "./tour-card.css";
 import calculateAvgRating from "../utils/avgRating";
 const TourCard = ({ tour }) => {
   const { _id, title, city, photo, price, featured, reviews } = tour;
-  console.log(reviews);
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
   return (
@@ -40,7 +39,7 @@ const TourCard = ({ tour }) => {
 
           <div className="card_bottom d-flex align-items-center-between justify-content mt-3">
             <h5>
-              {price}đ <span> /người</span>
+              {price.toLocaleString("vi-VN")}đ <span> /người</span>
             </h5>
 
             <button className="btn booking_btn">
