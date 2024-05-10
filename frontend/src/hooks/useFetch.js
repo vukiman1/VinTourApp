@@ -11,14 +11,14 @@ const useFetch = (url) => {
       try {
         const res = await fetch(url);
         if (!res.ok) {
-          setError("Failed to fetch");
+          setError("Lỗi kết nối đến csdl!");
         }
         const result = await res.json();
         setData(result.data);
         setLoading(false);
       } catch (error) {
         setError(error.message);
-        setLoading(false);
+        setLoading(true);
       }
     };
     fetchData();

@@ -6,6 +6,7 @@ import calculateAvgRating from "../utils/avgRating";
 import avatar from "../assets/images/avatar.jpg";
 import Booking from "../components/Booking/Booking";
 import { Spin } from "antd";
+import { useNavigate } from "react-router-dom";
 
 import formatPrice from "../hooks/formatPrice";
 import useFetch from "../hooks/useFetch";
@@ -19,6 +20,8 @@ const TourDetails = () => {
   const reviewMsgRef = useRef("");
   const [tourRating, setTourRating] = useState(null);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   // call API va load Data tu database
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
 
@@ -41,10 +44,13 @@ const TourDetails = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const reviewText = reviewMsgRef.current.value;
-
+    if (reviewText === "") {
+      return alert(`Chưa nhập nội dung!`);
+    }
     try {
       if (!user || user === undefined || user === null) {
-        alert("Please login to review");
+        alert("Vui lòng đăng nhập để bình luận!");
+        return navigate("/login");
       }
 
       const reviewObj = {
