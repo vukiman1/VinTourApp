@@ -2,7 +2,7 @@ import React from "react";
 import { WrapperHeader } from "../AdminUser/style";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import TableComponent from "../TableComponent/TableComponent";
+import TourTableComponent from "../TableComponent/TourTableComponent";
 
 const AdminOrder = () => {
   return (
@@ -21,7 +21,7 @@ const AdminOrder = () => {
         </Button>
       </div>
       <div style={{ marginTop: "20px" }}>
-        <TableComponent />
+        <TourTableComponent />
       </div>
     </div>
   );

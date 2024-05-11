@@ -2,7 +2,8 @@ import React from "react";
 import { WrapperHeader } from "../AdminUser/style";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import TableComponent from "../TableComponent/TableComponent";
+import TourTableComponent from "../TableComponent/TourTableComponent";
+
 const AdminRevenue = () => {
   return (
     <div style={{ marginLeft: "40px" }}>
@@ -20,7 +21,7 @@ const AdminRevenue = () => {
         </Button>
       </div>
       <div style={{ marginTop: "20px" }}>
-        <TableComponent />
+        <TourTableComponent />
       </div>
     </div>
   );
