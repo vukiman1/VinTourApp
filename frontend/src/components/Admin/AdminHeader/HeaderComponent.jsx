@@ -7,7 +7,7 @@ import {
   WrapperHeaderAccount,
   WrapperTextHeaderSmall,
 } from "./style";
-import logo1 from "../../../assets/images/logo1.png";
+import logo1 from "../../../assets/images/logo0.png";
 import { UserOutlined, CaretDownOutlined } from "@ant-design/icons";
 const HeaderComponent = () => {
   return (
@@ -19,7 +19,7 @@ const HeaderComponent = () => {
               src={logo1}
               alt=""
               style={{
-                maxWidth: "100px",
+                maxWidth: "50px",
                 height: "auto",
               }}
             />

@@ -53,7 +53,7 @@ const Admin = () => {
       case "4":
         return <AdminRevenue />;
       default:
-        return <div> nothing</div>;
+        return <AdminUser />;
     }
   };
   const handleOnClick = (key) => {
