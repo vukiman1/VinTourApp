@@ -4,7 +4,6 @@ import {
   UserOutlined,
   ShoppingOutlined,
   FundOutlined,
-  DownOutlined,
 } from "@ant-design/icons";
 
 import { Menu } from "antd";
@@ -42,6 +41,7 @@ const items = [
 
 const Admin = () => {
   const [keySelected, setKeySelected] = useState("");
+
   const renderPage = ({ key }) => {
     switch (key) {
       case "1":
