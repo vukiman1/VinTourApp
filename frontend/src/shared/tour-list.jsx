@@ -23,7 +23,17 @@ const TourList = (item) => {
                 {item.item.tourName}
               </Link>
             </Title>
-            <Text>Ngày đặt: {convertISODateToNormal(item.item.bookAt)}</Text>
+            <Text>Ngày đặt: {convertISODateToNormal(item.item.createdAt)}</Text>
+          </div>
+          <div>
+            <Text strong>Ngày khởi hành: </Text>
+            <Text>{convertISODateToNormal(item.item.bookAt)}</Text>{" "}
+            {/* Giả sử ngày khởi hành được lưu trong item.item.startDate */}
+          </div>
+          <div>
+            <Text strong>Số người: </Text>
+            <Text>{item.item.guestSize}</Text>{" "}
+            {/* Giả sử ngày khởi hành được lưu trong item.item.startDate */}
           </div>
           <div>
             <Text>{formatPrice(item.item.price)}</Text>
