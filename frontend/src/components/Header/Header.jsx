@@ -1,5 +1,5 @@
 import { React, useContext } from "react";
-import { Container, Row, Button, Dropdown } from "reactstrap";
+import { Container, Row, Button } from "reactstrap";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -22,7 +22,6 @@ const nav__links = [
 const Header = () => {
   const navigate = useNavigate();
   const { user, dispatch, role } = useContext(AuthContext);
-  console.log(role);
   const logout = () => {
     dispatch({ type: "LOGOUT" });
     navigate("/login");
@@ -93,9 +92,12 @@ const Header = () => {
                         <li>
                           <Link to="/tour-history">Lịch sử tour</Link>
                         </li>
-                        <li>
-                          <Link to="/admin">Quản trị hệ thống</Link>
-                        </li>
+
+                        {role === "admin" && (
+                          <li>
+                            <Link to="/admin">Quản trị hệ thống</Link>
+                          </li>
+                        )}
                       </ul>
                     </div>
                   </div>

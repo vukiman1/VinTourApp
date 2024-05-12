@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Home from "./../pages/Home";
 import Tours from "./../pages/Tours";
@@ -8,7 +8,6 @@ import SearchResultList from "./../pages/SearchResultList";
 import Register from "../pages/Register";
 import Login from "./../pages/Login";
 import ThankYou from "../pages/ThankYou";
-import Admin from "../pages/Admin";
 
 const Routers = () => {
   return (
@@ -21,7 +20,6 @@ const Routers = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/thank-you" element={<ThankYou />} />
       <Route path="/tours/search?" element={<SearchResultList />} />
-      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 };

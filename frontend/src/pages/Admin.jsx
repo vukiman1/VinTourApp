@@ -59,7 +59,7 @@ const Admin = () => {
   const handleOnClick = (key) => {
     setKeySelected(key);
   };
-  console.log("keySelected", keySelected);
+
   return (
     <div>
       <HeaderComponent />

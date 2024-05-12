@@ -1,15 +1,41 @@
-import React from "react";
-import { Col, Row } from "antd";
-import { NavLink, Link } from "react-router-dom";
-
+import React, { useContext } from "react";
+import { Col } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContext";
+import "./headerComponent.css";
+import { Dropdown, Space } from "antd";
 import {
   WrapperHeader,
   WrapperHeaderAccount,
   WrapperTextHeaderSmall,
 } from "./style";
 import logo1 from "../../../assets/images/logo0.png";
-import { UserOutlined, CaretDownOutlined } from "@ant-design/icons";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
+
 const HeaderComponent = () => {
+  const navigate = useNavigate();
+  const { user, dispatch, role } = useContext(AuthContext);
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
+  };
+
+  const items = [
+    {
+      key: "1",
+      label: <Link to="/home">Trang chủ</Link>,
+    },
+    {
+      key: "2",
+      danger: true,
+      label: (
+        <Link to="/login" onClick={logout}>
+          Đăng xuất
+        </Link>
+      ),
+    },
+  ];
+
   return (
     <div>
       <WrapperHeader gutter={16}>
@@ -31,13 +57,16 @@ const HeaderComponent = () => {
             <UserOutlined style={{ fontSize: "30px", color: "#fff" }} />
 
             <div>
-              <WrapperTextHeaderSmall>
-                <Link to="/login">Đăng nhập</Link>/
-                <Link to="/login">Đăng ký</Link>
-              </WrapperTextHeaderSmall>
-              <div>
-                <WrapperTextHeaderSmall>Tài khoản</WrapperTextHeaderSmall>
-                <CaretDownOutlined />
+              <WrapperTextHeaderSmall>{user.username}</WrapperTextHeaderSmall>
+              <div className="dropdow-menu">
+                <Dropdown menu={{ items }}>
+                  <Space>
+                    <WrapperTextHeaderSmall>
+                      {role === "admin" ? "Adminstrator" : "unknown"}
+                    </WrapperTextHeaderSmall>
+                    <DownOutlined />
+                  </Space>
+                </Dropdown>
               </div>
             </div>
           </WrapperHeaderAccount>
