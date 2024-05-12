@@ -10,6 +10,7 @@ import Login from "./../pages/Login";
 import ThankYou from "../pages/ThankYou";
 import Profile from "../pages/Profile";
 import History from "../pages/History";
+import About from "../pages/About";
 const Routers = () => {
   return (
     <Routes>
@@ -23,6 +24,7 @@ const Routers = () => {
       <Route path="/tours/search?" element={<SearchResultList />} />
       <Route path="/history/:id" element={<History />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/about" element={<About />} />
     </Routes>
   );
 };

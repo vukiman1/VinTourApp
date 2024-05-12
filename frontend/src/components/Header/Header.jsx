@@ -18,6 +18,10 @@ const nav__links = [
     path: "/tours",
     display: "Tours",
   },
+  {
+    path: "/about",
+    display: "Giới thiệu",
+  },
 ];
 const Header = () => {
   const navigate = useNavigate();
