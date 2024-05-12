@@ -1,7 +1,19 @@
 import React from "react";
-import { Table } from "antd";
-const TableComponent = (props) => {
+import { Table, Button } from "antd";
+
+const UserTableComponent = (props) => {
   const { selectionType = "checkbox" } = props;
+
+  const handleEdit = (record) => {
+    // Xử lý logic khi nhấn nút Sửa
+    console.log("Edit:", record);
+  };
+
+  const handleDelete = (record) => {
+    // Xử lý logic khi nhấn nút Xóa
+    console.log("Delete:", record);
+  };
+
   const columns = [
     {
       title: "Name",
@@ -23,8 +35,15 @@ const TableComponent = (props) => {
     {
       title: "Action",
       dataIndex: "action",
+      render: (_, record) => (
+        <span>
+          <Button onClick={() => handleEdit(record)}>Update</Button>
+          <Button onClick={() => handleDelete(record)}>Delete</Button>
+        </span>
+      ),
     },
   ];
+
   const data = [
     {
       key: "1",
@@ -60,7 +79,6 @@ const TableComponent = (props) => {
     },
   ];
 
-  // rowSelection object indicates the need for row selection
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -71,10 +89,10 @@ const TableComponent = (props) => {
     },
     getCheckboxProps: (record) => ({
       disabled: record.name === "Disabled User",
-      // Column configuration not to be checked
       name: record.name,
     }),
   };
+
   return (
     <Table
       rowSelection={{
@@ -87,4 +105,4 @@ const TableComponent = (props) => {
   );
 };
 
-export default TableComponent;
+export default UserTableComponent;

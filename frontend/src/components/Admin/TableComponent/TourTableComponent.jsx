@@ -1,66 +1,84 @@
 import React from "react";
-import { Table } from "antd";
-const TableComponent = (props) => {
+import { Table, Button } from "antd";
+
+const TourTableComponent = (props) => {
   const { selectionType = "checkbox" } = props;
+
+  const handleEdit = (record) => {
+    // Xử lý logic khi nhấn nút Sửa
+    console.log("Edit:", record);
+  };
+
+  const handleDelete = (record) => {
+    // Xử lý logic khi nhấn nút Xóa
+    console.log("Delete:", record);
+  };
+
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
+      title: "Title",
+      dataIndex: "title",
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "Location",
+      dataIndex: "location",
     },
     {
-      title: "Address",
-      dataIndex: "address",
+      title: "Hotel",
+      dataIndex: "hotel",
     },
     {
-      title: "Phone",
-      dataIndex: "phone",
+      title: "Price",
+      dataIndex: "price",
     },
     {
       title: "Action",
       dataIndex: "action",
+      render: (_, record) => (
+        <span>
+          <Button onClick={() => handleEdit(record)}>Update</Button>
+          <Button onClick={() => handleDelete(record)}>Delete</Button>
+        </span>
+      ),
     },
   ];
+
   const data = [
     {
       key: "1",
-      name: "John Brown",
-      email: "john.brown@gmail.com",
-      address: "New York No. 1 Lake Park",
-      phone: "0123456789",
+      title: "John Brown",
+      location: "john.brown@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
       action: "online",
     },
     {
       key: "2",
-      name: "Jim Green",
-      email: "jim@gmail.com",
-      address: "New York No. 1 Lake Park",
-      phone: "0123456789",
+      title: "Jim Green",
+      location: "jim@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
       action: "online",
     },
     {
       key: "3",
-      name: "Joe Black",
-      email: "john.brown@gmail.com",
-      address: "New York No. 1 Lake Park",
-      phone: "0123456789",
+      title: "Joe Black",
+      location: "john.brown@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
       action: "online",
     },
     {
       key: "4",
-      name: "Disabled User",
-      email: "john.brown@gmail.com",
-      address: "New York No. 1 Lake Park",
-      phone: "0123456789",
+      title: "Disabled User",
+      location: "john.brown@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
       action: "online",
     },
   ];
 
-  // rowSelection object indicates the need for row selection
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -70,11 +88,11 @@ const TableComponent = (props) => {
       );
     },
     getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
-      // Column configuration not to be checked
-      name: record.name,
+      disabled: record.title === "Disabled User",
+      title: record.title,
     }),
   };
+
   return (
     <Table
       rowSelection={{
@@ -87,4 +105,4 @@ const TableComponent = (props) => {
   );
 };
 
-export default TableComponent;
+export default TourTableComponent;
