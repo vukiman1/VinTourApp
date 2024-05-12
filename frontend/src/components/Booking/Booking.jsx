@@ -8,19 +8,20 @@ import { AuthContext } from "../../context/AuthContext";
 import { BASE_URL } from "../../utils/config";
 
 const Booking = ({ tour, avgRating }) => {
-  const { price, reviews, title } = tour;
+  const { price, reviews, title, _id } = tour;
   const navigate = useNavigate();
-
   const { user } = useContext(AuthContext);
 
   const [booking, setBooking] = useState({
     userId: user && user._id,
     userEmail: user && user.email,
     tourName: title,
+    tourId: _id,
     fullName: "",
     phone: "",
     guestSize: 1,
     bookAt: "",
+    price: price,
   });
 
   const handleChange = (e) => {
@@ -32,6 +33,7 @@ const Booking = ({ tour, avgRating }) => {
   // send data to sever
   const handleClick = async (e) => {
     e.preventDefault();
+    booking.price = totalAmount;
     console.log(booking);
     try {
       if (!user || user === undefined || user === null) {

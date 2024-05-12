@@ -90,7 +90,7 @@ const Header = () => {
                           <Link to="/profile">Hồ sơ</Link>
                         </li>
                         <li>
-                          <Link to="/tour-history">Lịch sử tour</Link>
+                          <Link to={`/history/${user._id}`}>Lịch sử tour</Link>
                         </li>
 
                         {role === "admin" && (

@@ -49,3 +49,20 @@ export const getAllBooking = async (req, res) => {
     });
   }
 };
+
+export const getBookingByUser = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const bookings = await Booking.find({ userId: id });
+    res.status(200).json({
+      success: true,
+      message: "Get bookings successfully",
+      data: bookings,
+    });
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      message: "Not Found!",
+    });
+  }
+};

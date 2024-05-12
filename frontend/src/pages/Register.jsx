@@ -63,7 +63,7 @@ const Register = () => {
                     <FormGroup>
                       <input
                         type="text"
-                        placeholder="Tên đăng nhập"
+                        placeholder="Tên người dùng"
                         required
                         id="username"
                         onChange={handleChange}

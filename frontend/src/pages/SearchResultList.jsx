@@ -6,17 +6,18 @@ import { useLocation } from "react-router-dom";
 import TourCard from "../shared/TourCard";
 
 const SearchResultList = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
   const location = useLocation();
   const [data] = useState(location.state);
-  console.log(data);
   return (
     <>
-      <CommonSection title={"Tour Search Result"} />
+      <CommonSection title={"Kết quả tìm kiếm"} />
       <section>
         <Container>
           <Row>
             {data.length === 0 ? (
-              <h4 className="text-center">No tour found</h4>
+              <h4 className="text-center">Không tìm thấy tour nào...</h4>
             ) : (
               data?.map((tour) => (
                 <Col lg="3" className="mb-4" key={tour._id}>

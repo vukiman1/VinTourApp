@@ -7,32 +7,21 @@ import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
   const locationRef = useRef("");
-  const distanceRef = useRef(0);
-  const maxGroupSizeRef = useRef(0);
   const navigate = useNavigate();
 
-  const searchHandler = async () => {
+  const searchHandler = async (e) => {
     const location = locationRef.current.value;
-    const distance = distanceRef.current.value;
-    const maxGroupSize = maxGroupSizeRef.current.value;
 
-    console.log(distance, maxGroupSize);
-
-    if (location === "" || distance === "" || maxGroupSize === "") {
-      return alert("All fields are required!");
+    if (location === "") {
+      return alert("Vui lòng nhập địa điểm muốn đi!");
     }
     const res = await fetch(
-      `${BASE_URL}/tours/search/getTourBySearch?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`
+      `${BASE_URL}/tours/search/getTourBySearch?city=${location}`
     );
-    console.log(
-      `${BASE_URL}/tours/search/getTourBySearch?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`
-    );
+    console.log(`${BASE_URL}/tours/search/getTourBySearch?city=${location}`);
     if (!res.ok) alert("Something went wrong");
     const result = await res.json();
-    navigate(
-      `/tours/search?city=${location}&distance=${distance}&maxGroupSize=${maxGroupSize}`,
-      { state: result.data }
-    );
+    navigate(`/tours/search?city=${location}`, { state: result.data });
   };
 
   return (
@@ -43,35 +32,13 @@ const SearchBar = () => {
             <span>
               <i className="ri-map-pin-line"></i>
             </span>
-            <div>
+            <div className="search_value">
               <h6>Địa điểm</h6>
               <input
                 type="text"
                 placeholder="Bạn muốn đi đâu?"
                 ref={locationRef}
               />
-            </div>
-          </FormGroup>
-          <FormGroup className="d-flex gap-3 form_group form_group-fast">
-            <span>
-              <i className="ri-map-pin-time-line"></i>
-            </span>
-            <div>
-              <h6>Khoảng cách</h6>
-              <input
-                type="number"
-                placeholder="Tính theo k/m"
-                ref={distanceRef}
-              />
-            </div>
-          </FormGroup>
-          <FormGroup className="d-flex gap-3 form_group form_group-fast">
-            <span>
-              <i className="ri-group-line"></i>
-            </span>
-            <div>
-              <h6>Số người</h6>
-              <input type="number" placeholder="0" ref={maxGroupSizeRef} />
             </div>
           </FormGroup>
 

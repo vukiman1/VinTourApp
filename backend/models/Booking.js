@@ -12,6 +12,9 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    tourId: {
+      type: String,
+    },
     fullName: {
       type: String,
       required: true,
@@ -23,6 +26,9 @@ const bookingSchema = new mongoose.Schema(
     phone: {
       type: Number,
       required: true,
+    },
+    price: {
+      type: Number,
     },
     bookAt: {
       type: Date,

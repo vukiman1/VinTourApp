@@ -13,6 +13,8 @@ import useFetch from "../hooks/useFetch";
 import { BASE_URL } from "../utils/config";
 
 import { AuthContext } from "../context/AuthContext";
+import Subtitle from "../shared/Subtitle";
+import FeatureTourList from "../components/Featured-tours/FeatureTourList";
 
 const TourDetails = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -204,6 +206,17 @@ const TourDetails = () => {
               </Col>
             </Row>
           )}
+        </Container>
+      </section>
+      <section>
+        <Container>
+          <Row>
+            <Col lg="12" className="mb-5">
+              <Subtitle subtitle={"Gợi ý"} />
+              <h2 className="featured_tour-title">Có thể bạn muốn đi:</h2>
+            </Col>
+            <FeatureTourList />
+          </Row>
         </Container>
       </section>
     </>

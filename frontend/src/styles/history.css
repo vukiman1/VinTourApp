@@ -1,0 +1,21 @@
+.history-container {
+  padding: 20px;
+}
+
+.history-title {
+  text-align: center;
+}
+
+.history-list {
+  margin-top: 20px;
+}
+
+.history-card {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.history-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

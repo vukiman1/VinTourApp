@@ -40,7 +40,7 @@ const HeaderComponent = () => {
     <div>
       <WrapperHeader gutter={16}>
         <Col span={6}>
-          <div style={{}}>
+          <Link to="/home">
             <img
               src={logo1}
               alt=""
@@ -49,7 +49,7 @@ const HeaderComponent = () => {
                 height: "auto",
               }}
             />
-          </div>
+          </Link>
         </Col>
         <Col span={12}></Col>
         <Col span={6} style={{ display: "flex", gap: "20px" }}>
@@ -57,17 +57,20 @@ const HeaderComponent = () => {
             <UserOutlined style={{ fontSize: "30px", color: "#fff" }} />
 
             <div>
-              <WrapperTextHeaderSmall>{user.username}</WrapperTextHeaderSmall>
               <div className="dropdow-menu">
-                <Dropdown menu={{ items }}>
-                  <Space>
-                    <WrapperTextHeaderSmall>
-                      {role === "admin" ? "Adminstrator" : "unknown"}
-                    </WrapperTextHeaderSmall>
-                    <DownOutlined />
-                  </Space>
-                </Dropdown>
+                <WrapperTextHeaderSmall>
+                  <Dropdown menu={{ items }}>
+                    <Space>
+                      {user.username}
+                      <DownOutlined />
+                    </Space>
+                  </Dropdown>
+                </WrapperTextHeaderSmall>
               </div>
+
+              <WrapperTextHeaderSmall>
+                {role === "admin" ? "Adminstrator" : "unknown"}
+              </WrapperTextHeaderSmall>
             </div>
           </WrapperHeaderAccount>
         </Col>
