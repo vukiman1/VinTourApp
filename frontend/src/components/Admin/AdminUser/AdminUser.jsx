@@ -1,7 +1,7 @@
 import { WrapperHeader } from "./style";
 
 import { PlusOutlined } from "@ant-design/icons";
-import TableComponent from "../TableComponent/UserTableComponent";
+import UserTableComponent from "../TableComponent/UserTableComponent";
 import React, { useState } from "react";
 import {
   Button,
@@ -15,7 +15,6 @@ import {
   Upload,
 } from "antd";
 const AdminUser = () => {
-  const { RangePicker } = DatePicker;
   const { TextArea } = Input;
   const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -37,7 +36,7 @@ const AdminUser = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const [componentDisabled, setComponentDisabled] = useState(true);
+
   return (
     <div style={{ marginLeft: "40px" }}>
       <WrapperHeader>Quản lí người dùng</WrapperHeader>
@@ -55,7 +54,7 @@ const AdminUser = () => {
         </Button>
       </div>
       <div style={{ marginTop: "20px" }}>
-        <TableComponent />
+        <UserTableComponent />
       </div>
       <Modal
         title="Thêm người dùng"
@@ -63,12 +62,6 @@ const AdminUser = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Checkbox
-          checked={componentDisabled}
-          onChange={(e) => setComponentDisabled(e.target.checked)}
-        >
-          Form disabled
-        </Checkbox>
         <Form
           labelCol={{
             span: 4,
@@ -77,7 +70,6 @@ const AdminUser = () => {
             span: 14,
           }}
           layout="horizontal"
-          disabled={componentDisabled}
           style={{
             maxWidth: 600,
           }}
@@ -99,18 +91,6 @@ const AdminUser = () => {
           </Form.Item>
           <Form.Item label="Address">
             <Input />
-          </Form.Item>
-          <Form.Item label="Select">
-            <Select>
-              <Select.Option value="demo">Demo</Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item label="DatePicker">
-            <DatePicker />
-          </Form.Item>
-          <Form.Item label="RangePicker">
-            <RangePicker />
           </Form.Item>
 
           <Form.Item label="TextArea">

@@ -1,66 +1,88 @@
 import React from "react";
-import { Table } from "antd";
-const TableComponent = (props) => {
+import { Table, Button } from "antd";
+import useFetch from "./../../../hooks/useFetch";
+import { BASE_URL } from "./../../../utils/config";
+
+const TourTableComponent = (props) => {
   const { selectionType = "checkbox" } = props;
+
+  const handleEdit = (record) => {
+    // Xử lý logic khi nhấn nút Sửa
+    console.log("Edit:", record);
+  };
+
+  const handleDelete = (record) => {
+    // Xử lý logic khi nhấn nút Xóa
+    console.log("Delete:", record);
+  };
+
+  const { data: tours } = useFetch(`${BASE_URL}/tours`);
+  console.log(tours);
+
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
+      title: "Title",
+      dataIndex: "title",
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "City",
+      dataIndex: "city",
     },
+
     {
-      title: "Address",
-      dataIndex: "address",
-    },
-    {
-      title: "Phone",
-      dataIndex: "phone",
+      title: "Price",
+      dataIndex: "price",
     },
     {
       title: "Action",
       dataIndex: "action",
+      render: (_, record) => (
+        <span>
+          <Button className="me-2" onClick={() => handleEdit(record)}>
+            Update
+          </Button>
+          <Button onClick={() => handleDelete(record)}>Delete</Button>
+        </span>
+      ),
     },
   ];
+
   const data = [
     {
       key: "1",
-      name: "John Brown",
-      email: "john.brown@gmail.com",
-      address: "New York No. 1 Lake Park",
-      phone: "0123456789",
+      title: "John Brown",
+      location: "john.brown@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
       action: "online",
     },
     {
       key: "2",
-      name: "Jim Green",
-      email: "jim@gmail.com",
-      address: "New York No. 1 Lake Park",
-      phone: "0123456789",
+      title: "Jim Green",
+      location: "jim@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
       action: "online",
     },
     {
       key: "3",
-      name: "Joe Black",
-      email: "john.brown@gmail.com",
-      address: "New York No. 1 Lake Park",
-      phone: "0123456789",
+      title: "Joe Black",
+      location: "john.brown@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
       action: "online",
     },
     {
       key: "4",
-      name: "Disabled User",
-      email: "john.brown@gmail.com",
-      address: "New York No. 1 Lake Park",
-      phone: "0123456789",
+      title: "Disabled User",
+      location: "john.brown@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
       action: "online",
     },
   ];
 
-  // rowSelection object indicates the need for row selection
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -70,11 +92,11 @@ const TableComponent = (props) => {
       );
     },
     getCheckboxProps: (record) => ({
-      disabled: record.name === "Disabled User",
-      // Column configuration not to be checked
-      name: record.name,
+      disabled: record.title === "Disabled User",
+      title: record.title,
     }),
   };
+
   return (
     <Table
       rowSelection={{
@@ -82,9 +104,9 @@ const TableComponent = (props) => {
         ...rowSelection,
       }}
       columns={columns}
-      dataSource={data}
+      dataSource={tours}
     />
   );
 };
 
-export default TableComponent;
+export default TourTableComponent;

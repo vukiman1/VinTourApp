@@ -126,7 +126,7 @@ const TourDetails = () => {
                         <i class="ri-hotel-line"></i> {hotel}
                       </span>
                       <span>
-                        <i class="ri-group-line"></i> {maxGroupSize} nguười
+                        <i class="ri-group-line"></i> {maxGroupSize} người
                       </span>
                     </div>
                     <h5>Mô tả</h5>
