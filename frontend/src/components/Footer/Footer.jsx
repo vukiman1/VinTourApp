@@ -8,15 +8,15 @@ import logo from "../../assets/images/logo1.png";
 const quick__links = [
   {
     path: "/home",
-    display: "Home",
-  },
-  {
-    path: "/about",
-    display: "About",
+    display: "Trang chủ",
   },
   {
     path: "/tours",
     display: "Tours",
+  },
+  {
+    path: "/about",
+    display: "Giới thiệu",
   },
 ];
 

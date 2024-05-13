@@ -1,5 +1,6 @@
 import React from "react";
 import { Avatar, Card, Typography, Row, Col } from "antd";
+import ava from '../../assets/images/user.png'
 import {
   UserOutlined,
   PhoneOutlined,
@@ -20,7 +21,7 @@ const ProfileCard = (data) => {
         className="profile-card"
         cover={
           <div className="avatar-container">
-            <Avatar size={100} icon={<UserOutlined />} className="avatar" />
+            <img src={ava} alt="" />
           </div>
         }
       >
@@ -42,8 +43,10 @@ const ProfileCard = (data) => {
               </Text>
             </Col>
             <Col span={16}>
-              <Text>Chưa có</Text>
+              <Text>Chưa có </Text>
+              <i className="ms-2 ri-edit-line"></i>
             </Col>
+            
           </Row>
           <Row className="info-row" gutter={[16, 16]}>
             <Col span={8}>
@@ -52,7 +55,8 @@ const ProfileCard = (data) => {
               </Text>
             </Col>
             <Col span={16}>
-              <Text>{data.user.email}</Text>
+              <Text>{data.user.email} </Text> <span></span>
+              <i className="ms-2 ri-edit-line"></i>
             </Col>
           </Row>
           <Row className="info-row" gutter={[16, 16]}>
@@ -62,7 +66,8 @@ const ProfileCard = (data) => {
               </Text>
             </Col>
             <Col span={16}>
-              <Text>Chưa có</Text>
+              <Text>Chưa có </Text>
+              <i className=" ms-2 ri-edit-line"></i>
             </Col>
           </Row>
           <Row className="info-row" gutter={[16, 16]}>
@@ -72,9 +77,12 @@ const ProfileCard = (data) => {
               </Text>
             </Col>
             <Col span={16}>
-              <Text>Chưa có</Text>
+              <Text>Chưa có </Text>
+              <i className="ms-2 ri-edit-line"></i>
             </Col>
           </Row>
+        </div>
+        <div>
         </div>
       </Card>
     </div>

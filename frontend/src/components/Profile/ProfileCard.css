@@ -9,16 +9,20 @@
 .profile-card {
   width: 400px;
   background-color: #fff;
-  border-radius: 20px;
+
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .avatar-container {
   display: flex;
   justify-content: center;
-  margin-top: -50px;
+  margin-top: -40px;
 }
-
+.avatar-container img 
+{
+  width: 20%;
+  margin-left: 40%;
+}
 .avatar {
   background-color: #41c9e2;
 }

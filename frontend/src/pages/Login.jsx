@@ -21,6 +21,11 @@ const Login = () => {
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const [visible, setVisible] = useState(true);
+  const togglePassword = () =>{
+    setVisible(!visible)
+  };
+
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
@@ -77,19 +82,26 @@ const Login = () => {
                       />
                     </FormGroup>
                     <FormGroup>
-                      <input
-                        type="password"
+                    <div className="input-password">
+                     <input
+                        type={visible ? "text" : "password"}
                         placeholder="Mật khẩu"
                         required
                         id="password"
                         onChange={handleChange}
-                      />
+                       
+                       />
+                        <span className="eyeIcon" onClick={togglePassword}>
+                        <i class={visible ? "ri-eye-line" : "ri-eye-off-line"} ></i>
+                        </span>
+                      
+                     </div>
                     </FormGroup>
                     <Button
                       className="btn secondary__btn auth_btn"
                       type="submit"
                     >
-                      Đăng nhập heheh
+                      Đăng nhập
                     </Button>
                   </Form>
                   <p>
