@@ -32,7 +32,7 @@ const UserTableComponent = (props) => {
   useEffect(() => {
     fetchData();
   });
-  // ===================================================================
+  // ==================================================================
   console.log(users);
   console.log(`${BASE_URL}/users`);
   const handleEdit = (record) => {
