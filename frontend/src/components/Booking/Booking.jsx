@@ -8,13 +8,6 @@ import { AuthContext } from "../../context/AuthContext";
 import { BASE_URL } from "../../utils/config";
 
 const Booking = ({ tour, avgRating }) => {
-  function getTodayDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    const day = today.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
   const { price, reviews, title, _id } = tour;
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -105,7 +98,6 @@ const Booking = ({ tour, avgRating }) => {
             <input
               type="date"
               placeholder=" "
-              defaultValue={getTodayDate()}
               id="bookAt"
               required
               onChange={handleChange}
@@ -114,7 +106,6 @@ const Booking = ({ tour, avgRating }) => {
               type="number"
               placeholder="Số khách hàng"
               id="guestSize"
-              min={1}
               required
               onChange={handleChange}
             />

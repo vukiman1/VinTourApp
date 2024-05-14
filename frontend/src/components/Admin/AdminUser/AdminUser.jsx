@@ -14,21 +14,14 @@ import {
   Select,
   Upload,
 } from "antd";
-const AdminUser = () => {
-  const { TextArea } = Input;
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
+import UserModal from "./UserModal";
 
+const AdminUser = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
   };
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -36,7 +29,6 @@ const AdminUser = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
   return (
     <div style={{ marginLeft: "40px" }}>
       <WrapperHeader>Quản lí người dùng</WrapperHeader>
@@ -56,73 +48,12 @@ const AdminUser = () => {
       <div style={{ marginTop: "20px" }}>
         <UserTableComponent />
       </div>
-      <Modal
+      <UserModal
         title="Thêm người dùng"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-      >
-        <Form
-          labelCol={{
-            span: 4,
-          }}
-          wrapperCol={{
-            span: 14,
-          }}
-          layout="horizontal"
-          style={{
-            maxWidth: 600,
-          }}
-        >
-          <Form.Item label="Name">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Gentle">
-            <Radio.Group>
-              <Radio value="Nam"> Male </Radio>
-              <Radio value="Nữ"> Female </Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="Email">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Phone">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Address">
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="TextArea">
-            <TextArea rows={4} />
-          </Form.Item>
-
-          <Form.Item
-            label="Upload"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-          >
-            <Upload action="/upload.do" listType="picture-card">
-              <button
-                style={{
-                  border: 0,
-                  background: "none",
-                }}
-                type="button"
-              >
-                <PlusOutlined />
-                <div
-                  style={{
-                    marginTop: 8,
-                  }}
-                >
-                  Upload
-                </div>
-              </button>
-            </Upload>
-          </Form.Item>
-        </Form>
-      </Modal>
+      />
     </div>
   );
 };
