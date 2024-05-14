@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Form, Input, Radio, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-
+//ss
 const UserModal = () => {
   const normFile = (e) => {
     if (Array.isArray(e)) {
