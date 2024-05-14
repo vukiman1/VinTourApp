@@ -4,6 +4,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import UserTableComponent from "../TableComponent/UserTableComponent";
 import { Button } from "antd";
 import UserModal from "./UserModal";
+import PushData from "../../../hooks/pushData";
 
 const AdminUser = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

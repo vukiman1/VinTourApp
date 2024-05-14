@@ -37,21 +37,12 @@ const UserModal = ({ title, visible, onOk, onCancel, user }) => {
       >
         <Form.Item
           label="Name"
-          name="name"
+          name="username"
           rules={[{ required: true, message: "Please input your name!" }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          label="Gender"
-          name="gender"
-          rules={[{ required: true, message: "Please select your gender!" }]}
-        >
-          <Radio.Group>
-            <Radio value="Nam"> Male </Radio>
-            <Radio value="Nữ"> Female </Radio>
-          </Radio.Group>
-        </Form.Item>
+
         <Form.Item
           label="Email"
           name="email"

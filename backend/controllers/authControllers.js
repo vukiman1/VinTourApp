@@ -9,6 +9,8 @@ export const register = async (req, res) => {
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
+      phone: req.body.phone,
+      address: req.body.address,
       password: hash,
       photo: req.body.photo,
     });
