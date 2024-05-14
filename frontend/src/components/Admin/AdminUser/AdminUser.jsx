@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { WrapperHeader } from "./style";
 import { PlusOutlined } from "@ant-design/icons";
 import UserTableComponent from "../TableComponent/UserTableComponent";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import UserModal from "./UserModal";
-import PushData from "../../../hooks/pushData";
+import { BASE_URL } from "../../../utils/config";
+import useFetch from "../../../hooks/useFetch";
 
 const AdminUser = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const { data: refetch } = useFetch(`${BASE_URL}/users`); // Get the refetch function
 
   const showModal = (user) => {
     setCurrentUser(user);
@@ -17,11 +19,30 @@ const AdminUser = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
+    setCurrentUser(null); // Reset current user after closing modal
+    refetch(); // Trigger refetch to update the user list after update or creation
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    setCurrentUser(null);
+    setCurrentUser(null); // Reset current user after closing modal
+  };
+
+  const handleDelete = async (user) => {
+    try {
+      const response = await fetch(`${BASE_URL}/users/${user._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        message.success("User deleted successfully");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+    }
   };
 
   return (
@@ -35,13 +56,17 @@ const AdminUser = () => {
             borderRadius: "6px",
             borderStyle: "dashed",
           }}
-          onClick={() => showModal(null)}
+          onClick={() => showModal(null)} // Show modal with null to create new user
         >
           <PlusOutlined style={{ fontSize: "60px" }} />
         </Button>
       </div>
       <div style={{ marginTop: "20px" }}>
-        <UserTableComponent onEdit={showModal} />
+        <UserTableComponent
+          onEdit={showModal}
+          onDelete={handleDelete}
+          refetch={refetch}
+        />
       </div>
       <UserModal
         title={currentUser ? "Chỉnh sửa người dùng" : "Thêm người dùng"}

@@ -1,13 +1,17 @@
-import { Table, Button } from "antd";
-import React, { useState, useEffect } from "react";
+import { Table, Button, Popconfirm } from "antd";
+import React from "react";
 import { BASE_URL } from "../../../utils/config";
 import useFetch from "../../../hooks/useFetch";
 
-const UserTableComponent = ({ onEdit }) => {
+const UserTableComponent = ({ onEdit, onDelete }) => {
   const { data: users, refetch } = useFetch(`${BASE_URL}/users`);
 
-  const handleEdit = async (record) => {
+  const handleEdit = (record) => {
     onEdit(record); // Pass selected user data to the modal
+  };
+
+  const handleDelete = async (record) => {
+    await onDelete(record);
   };
 
   const columns = [
@@ -32,10 +36,27 @@ const UserTableComponent = ({ onEdit }) => {
       key: "address",
     },
     {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+    },
+    {
       title: "Action",
       key: "action",
       render: (text, record) => (
-        <Button onClick={() => handleEdit(record)}>Update</Button>
+        <>
+          <Button onClick={() => handleEdit(record)}>Update</Button>
+          <Popconfirm
+            title="Are you sure you want to delete this user?"
+            onConfirm={() => handleDelete(record)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger className="ms-2">
+              Delete
+            </Button>
+          </Popconfirm>
+        </>
       ),
     },
   ];

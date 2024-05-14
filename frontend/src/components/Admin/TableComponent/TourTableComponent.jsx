@@ -1,93 +1,62 @@
+import { Table, Button, Popconfirm } from "antd";
 import React from "react";
-import { Table, Button } from "antd";
-import useFetch from "./../../../hooks/useFetch";
-import { BASE_URL } from "./../../../utils/config";
+import { BASE_URL } from "../../../utils/config";
+import useFetch from "../../../hooks/useFetch";
 
-const TourTableComponent = (props) => {
-  const { selectionType = "checkbox" } = props;
+const UserTableComponent = ({ onEdit, onDelete }) => {
+  const { data: users, refetch } = useFetch(`${BASE_URL}/users`);
 
-  const handleEdit = async (record) => {
-    //Xử lý logic khi nhấn nút Xóa
+  const handleEdit = (record) => {
+    onEdit(record); // Pass selected user data to the modal
   };
 
-  const handleDelete = async (record) => {
-    try {
-      const res = await fetch(`${BASE_URL}/tours/${record._id}`, {
-        method: "delete",
-        headers: {
-          "content-type": "application/json",
-        },
-        credentials: "include",
-      });
-      const result = await res.json();
-
-      if (!res.ok) {
-        return alert(result.message);
-      }
-      alert("Xoá thành công!");
-      window.location.reload();
-    } catch (error) {
-      alert(error.message);
-    }
-    console.log("Delete:", record._id);
+  const handleDelete = (record) => {
+    onDelete(record); // Call the delete function passed as prop
   };
-
-  const { data: tours } = useFetch(`${BASE_URL}/tours`);
-  console.log(tours);
 
   const columns = [
     {
-      title: "Title",
-      dataIndex: "title",
-      render: (text) => <a>{text}</a>,
+      title: "Name",
+      dataIndex: "username",
+      key: "username",
     },
     {
-      title: "City",
-      dataIndex: "city",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
-
     {
-      title: "Price",
-      dataIndex: "price",
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
     },
     {
       title: "Action",
-      dataIndex: "action",
-      render: (_, record) => (
-        <span>
-          <Button className="me-2" onClick={() => handleEdit(record)}>
-            Update
-          </Button>
-          <Button onClick={() => handleDelete(record)}>Delete</Button>
-        </span>
+      key: "action",
+      render: (text, record) => (
+        <>
+          <Button onClick={() => handleEdit(record)}>Update</Button>
+          <Popconfirm
+            title="Are you sure to delete this user?"
+            onConfirm={() => handleDelete(record)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button style={{ marginLeft: "8px" }} danger>
+              Delete
+            </Button>
+          </Popconfirm>
+        </>
       ),
     },
   ];
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
-    },
-    getCheckboxProps: (record) => ({
-      disabled: record.title === "Disabled User",
-      title: record.title,
-    }),
-  };
-
-  return (
-    <Table
-      rowSelection={{
-        type: selectionType,
-        ...rowSelection,
-      }}
-      columns={columns}
-      dataSource={tours}
-    />
-  );
+  return <Table dataSource={users} columns={columns} rowKey="_id" />;
 };
 
-export default TourTableComponent;
+export default UserTableComponent;

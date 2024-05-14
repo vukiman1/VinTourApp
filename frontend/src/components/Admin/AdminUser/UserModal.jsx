@@ -1,29 +1,45 @@
-import { Modal, Form, Input, Button } from "antd";
-import React from "react";
+import { Modal, Form, Input, Select, message } from "antd";
+import React, { useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
 
 const UserModal = ({ title, visible, onOk, onCancel, user }) => {
   const [form] = Form.useForm();
 
+  useEffect(() => {
+    if (visible) {
+      form.resetFields();
+      if (user) {
+        form.setFieldsValue(user);
+      }
+    }
+  }, [visible, user, form]);
+
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
       console.log(values);
-      // Assuming your API endpoint for updating user information is `${BASE_URL}/users/${user._id}`
-      const response = await fetch(`${BASE_URL}/users/${user._id}`, {
-        method: "POST",
+
+      const url = user ? `${BASE_URL}/users/${user._id}` : `${BASE_URL}/users`;
+      const method = user ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
       });
+
       if (response.ok) {
-        onOk(); // Close the modal on successful update
-      } else {
-        // Handle error
+        message
+          .success(`User ${user ? "updated" : "created"} successfully`)
+          .then(() => {
+            window.location.reload();
+          });
+        onOk(); // Close the modal on successful update or creation
       }
     } catch (error) {
-      console.error("Failed to update user:", error);
+      console.error(`Failed to ${user ? "update" : "create"} user:`, error);
     }
   };
 
@@ -72,6 +88,27 @@ const UserModal = ({ title, visible, onOk, onCancel, user }) => {
           rules={[{ required: true, message: "Please input your address!" }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="Role"
+          name="role"
+          rules={[{ required: true, message: "Please select your role!" }]}
+        >
+          <Select>
+            <Select.Option value="admin">Admin</Select.Option>
+            <Select.Option value="user">User</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={
+            !user
+              ? [{ required: true, message: "Please input your password!" }]
+              : []
+          }
+        >
+          <Input.Password />
         </Form.Item>
       </Form>
     </Modal>
