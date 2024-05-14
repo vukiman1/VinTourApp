@@ -75,7 +75,7 @@ const AdminTour = () => {
           <Form.Item label="Price">
             <Input />
           </Form.Item>
-          <Form.Item label="RangePicker">
+          <Form.Item label="Time">
             <RangePicker />
           </Form.Item>
           <Form.Item

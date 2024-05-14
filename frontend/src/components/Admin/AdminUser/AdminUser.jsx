@@ -3,19 +3,8 @@ import { WrapperHeader } from "./style";
 import { PlusOutlined } from "@ant-design/icons";
 import UserTableComponent from "../TableComponent/UserTableComponent";
 import React, { useState } from "react";
-import {
-  Button,
-  Modal,
-  Checkbox,
-  DatePicker,
-  Form,
-  Input,
-  Radio,
-  Select,
-  Upload,
-} from "antd";
+import { Button, Modal, Form, Input, Radio, Upload } from "antd";
 const AdminUser = () => {
-  const { TextArea } = Input;
   const normFile = (e) => {
     if (Array.isArray(e)) {
       return e;
@@ -91,10 +80,6 @@ const AdminUser = () => {
           </Form.Item>
           <Form.Item label="Address">
             <Input />
-          </Form.Item>
-
-          <Form.Item label="TextArea">
-            <TextArea rows={4} />
           </Form.Item>
 
           <Form.Item
