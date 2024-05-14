@@ -22,8 +22,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [visible, setVisible] = useState(true);
-  const togglePassword = () =>{
-    setVisible(!visible)
+  const togglePassword = () => {
+    setVisible(!visible);
   };
 
   const handleChange = (e) => {
@@ -82,20 +82,20 @@ const Login = () => {
                       />
                     </FormGroup>
                     <FormGroup>
-                    <div className="input-password">
-                     <input
-                        type={visible ? "text" : "password"}
-                        placeholder="Mật khẩu"
-                        required
-                        id="password"
-                        onChange={handleChange}
-                       
-                       />
+                      <div className="input-password">
+                        <input
+                          type={visible ? "text" : "password"}
+                          placeholder="Mật khẩu"
+                          required
+                          id="password"
+                          onChange={handleChange}
+                        />
                         <span className="eyeIcon" onClick={togglePassword}>
-                        <i class={visible ? "ri-eye-line" : "ri-eye-off-line"} ></i>
+                          <i
+                            class={visible ? "ri-eye-line" : "ri-eye-off-line"}
+                          ></i>
                         </span>
-                      
-                     </div>
+                      </div>
                     </FormGroup>
                     <Button
                       className="btn secondary__btn auth_btn"

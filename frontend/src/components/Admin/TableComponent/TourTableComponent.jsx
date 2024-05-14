@@ -6,14 +6,30 @@ import { BASE_URL } from "./../../../utils/config";
 const TourTableComponent = (props) => {
   const { selectionType = "checkbox" } = props;
 
-  const handleEdit = (record) => {
-    // Xử lý logic khi nhấn nút Sửa
-    console.log("Edit:", record);
+  const handleEdit = async (record) => {
+    //Xử lý logic khi nhấn nút Xóa
   };
 
-  const handleDelete = (record) => {
-    // Xử lý logic khi nhấn nút Xóa
-    console.log("Delete:", record);
+  const handleDelete = async (record) => {
+    try {
+      const res = await fetch(`${BASE_URL}/tours/${record._id}`, {
+        method: "delete",
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+      });
+      const result = await res.json();
+
+      if (!res.ok) {
+        return alert(result.message);
+      }
+      alert("Xoá thành công!");
+      window.location.reload();
+    } catch (error) {
+      alert(error.message);
+    }
+    console.log("Delete:", record._id);
   };
 
   const { data: tours } = useFetch(`${BASE_URL}/tours`);
@@ -45,41 +61,6 @@ const TourTableComponent = (props) => {
           <Button onClick={() => handleDelete(record)}>Delete</Button>
         </span>
       ),
-    },
-  ];
-
-  const data = [
-    {
-      key: "1",
-      title: "John Brown",
-      location: "john.brown@gmail.com",
-      hotel: "New York No. 1 Lake Park",
-      price: "0123456789",
-      action: "online",
-    },
-    {
-      key: "2",
-      title: "Jim Green",
-      location: "jim@gmail.com",
-      hotel: "New York No. 1 Lake Park",
-      price: "0123456789",
-      action: "online",
-    },
-    {
-      key: "3",
-      title: "Joe Black",
-      location: "john.brown@gmail.com",
-      hotel: "New York No. 1 Lake Park",
-      price: "0123456789",
-      action: "online",
-    },
-    {
-      key: "4",
-      title: "Disabled User",
-      location: "john.brown@gmail.com",
-      hotel: "New York No. 1 Lake Park",
-      price: "0123456789",
-      action: "online",
     },
   ];
 

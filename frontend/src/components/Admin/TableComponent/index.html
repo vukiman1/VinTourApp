@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch API with Access Token</title>
+  </head>
+  <body>
+    <h1>API Data</h1>
+    <div id="data-container">Loading data...</div>
+
+    <script>
+      // Hàm để đọc giá trị từ cookie
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+      }
+
+      // URL của API
+      const apiUrl = "http://localhost:4000/api/v1/users";
+
+      // Hàm để lấy dữ liệu từ API
+      async function fetchData() {
+        try {
+          // Lấy accessToken từ cookie
+          const accessToken = getCookie("accessToken");
+          if (!accessToken) {
+            throw new Error("Access token not found in cookies");
+          }
+
+          // Gọi API với tiêu đề Authorization
+          const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+
+          // Kiểm tra nếu phản hồi không thành công
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok " + response.statusText
+            );
+          }
+
+          // Chuyển đổi dữ liệu phản hồi thành JSON
+          const data = await response.json();
+
+          // Hiển thị dữ liệu ra trình duyệt
+          displayData(data);
+        } catch (error) {
+          // Xử lý lỗi
+          console.error("Fetch error:", error);
+          document.getElementById("data-container").textContent =
+            "Error fetching data: " + error.message;
+        }
+      }
+
+      // Hàm để hiển thị dữ liệu
+      function displayData(data) {
+        const dataContainer = document.getElementById("data-container");
+        // Chuyển đổi dữ liệu thành chuỗi JSON và hiển thị
+        dataContainer.textContent = JSON.stringify(data, null, 2);
+      }
+
+      // Gọi hàm fetchData khi trang được tải
+      window.onload = fetchData;
+    </script>
+  </body>
+</html>
