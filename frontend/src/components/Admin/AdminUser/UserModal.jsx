@@ -1,39 +1,41 @@
-import React, { useEffect } from "react";
-import { Modal, Form, Input, Radio, Upload, Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Modal, Form, Input, Button } from "antd";
+import React from "react";
+import { BASE_URL } from "../../../utils/config";
 
 const UserModal = ({ title, visible, onOk, onCancel, user }) => {
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    if (user) {
-      form.setFieldsValue(user);
-    } else {
-      form.resetFields();
+  const handleOk = async () => {
+    try {
+      const values = await form.validateFields();
+      console.log(values);
+      // Assuming your API endpoint for updating user information is `${BASE_URL}/users/${user._id}`
+      const response = await fetch(`${BASE_URL}/users/${user._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      if (response.ok) {
+        onOk(); // Close the modal on successful update
+      } else {
+        // Handle error
+      }
+    } catch (error) {
+      console.error("Failed to update user:", error);
     }
-  }, [user, form]);
-
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
   };
 
   return (
-    <Modal title={title} visible={visible} onOk={onOk} onCancel={onCancel}>
+    <Modal title={title} visible={visible} onOk={handleOk} onCancel={onCancel}>
       <Form
         form={form}
-        labelCol={{
-          span: 4,
-        }}
-        wrapperCol={{
-          span: 14,
-        }}
+        initialValues={user} // Populate form fields with user data
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 14 }}
         layout="horizontal"
-        style={{
-          maxWidth: 600,
-        }}
+        style={{ maxWidth: 600 }}
       >
         <Form.Item
           label="Name"
@@ -42,7 +44,6 @@ const UserModal = ({ title, visible, onOk, onCancel, user }) => {
         >
           <Input />
         </Form.Item>
-
         <Form.Item
           label="Email"
           name="email"
@@ -71,17 +72,6 @@ const UserModal = ({ title, visible, onOk, onCancel, user }) => {
           rules={[{ required: true, message: "Please input your address!" }]}
         >
           <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Upload"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-          rules={[{ required: true, message: "Please upload a file!" }]}
-        >
-          <Upload action="/upload.do" listType="picture-card">
-            <Button icon={<PlusOutlined />}>Upload</Button>
-          </Upload>
         </Form.Item>
       </Form>
     </Modal>

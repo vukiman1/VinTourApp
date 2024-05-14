@@ -1,25 +1,13 @@
-// export default UserTableComponent;
 import { Table, Button } from "antd";
 import React, { useState, useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
 import useFetch from "../../../hooks/useFetch";
 
 const UserTableComponent = ({ onEdit }) => {
-  // const [users, setUsers] = useState([]);
+  const { data: users, refetch } = useFetch(`${BASE_URL}/users`);
 
-  const { data: users } = useFetch(`${BASE_URL}/users`);
-  const fetchData = () => {
-    return users;
-  };
-  useEffect(() => {
-    fetchData();
-  }, []); // Chỉ chạy một lần khi component mount
-
-  console.log(users);
-
-  // handle
   const handleEdit = async (record) => {
-    //Xử lý logic khi nhấn nút Xóa
+    onEdit(record); // Pass selected user data to the modal
   };
 
   const columns = [
@@ -28,7 +16,6 @@ const UserTableComponent = ({ onEdit }) => {
       dataIndex: "username",
       key: "username",
     },
-
     {
       title: "Email",
       dataIndex: "email",
@@ -48,10 +35,11 @@ const UserTableComponent = ({ onEdit }) => {
       title: "Action",
       key: "action",
       render: (text, record) => (
-        <Button onClick={() => onEdit(record)}>Update</Button>
+        <Button onClick={() => handleEdit(record)}>Update</Button>
       ),
     },
   ];
+
   return <Table dataSource={users} columns={columns} rowKey="_id" />;
 };
 
