@@ -11,7 +11,6 @@ import {
   Form,
   Input,
   Radio,
-  Select,
   Upload,
 } from "antd";
 import UserModal from "./UserModal";
