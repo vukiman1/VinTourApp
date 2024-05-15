@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Col } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
-import "./headerComponent.css";
+
 import { Dropdown, Space } from "antd";
 import {
   WrapperHeader,
@@ -23,13 +23,17 @@ const HeaderComponent = () => {
   const items = [
     {
       key: "1",
-      label: <Link to="/home">Trang chủ</Link>,
+      label: (
+        <Link to="/home" style={{ textDecoration: "none" }}>
+          Trang chủ
+        </Link>
+      ),
     },
     {
       key: "2",
       danger: true,
       label: (
-        <Link to="/login" onClick={logout}>
+        <Link to="/login" onClick={logout} style={{ textDecoration: "none" }}>
           Đăng xuất
         </Link>
       ),
@@ -57,7 +61,7 @@ const HeaderComponent = () => {
             <UserOutlined style={{ fontSize: "30px", color: "#fff" }} />
 
             <div>
-              <div className="dropdow-menu">
+              <div style={{ cursor: "pointer" }}>
                 <WrapperTextHeaderSmall>
                   <Dropdown menu={{ items }}>
                     <Space>
