@@ -19,7 +19,9 @@ const UserModal = ({ title, visible, onOk, onCancel, user }) => {
       const values = await form.validateFields();
       console.log(values);
 
-      const url = user ? `${BASE_URL}/users/${user._id}` : `${BASE_URL}/users`;
+      const url = user
+        ? `${BASE_URL}/users/${user._id}`
+        : `${BASE_URL}/auth/register`;
       const method = user ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -27,6 +29,7 @@ const UserModal = ({ title, visible, onOk, onCancel, user }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(values),
       });
 

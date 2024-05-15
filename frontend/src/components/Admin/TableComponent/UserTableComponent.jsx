@@ -4,7 +4,7 @@ import { BASE_URL } from "../../../utils/config";
 import useFetch from "../../../hooks/useFetch";
 
 const UserTableComponent = ({ onEdit, onDelete }) => {
-  const { data: users, refetch } = useFetch(`${BASE_URL}/users`);
+  const { data: users } = useFetch(`${BASE_URL}/users`);
 
   const handleEdit = (record) => {
     onEdit(record); // Pass selected user data to the modal

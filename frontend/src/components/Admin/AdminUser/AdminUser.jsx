@@ -32,6 +32,7 @@ const AdminUser = () => {
     try {
       const response = await fetch(`${BASE_URL}/users/${user._id}`, {
         method: "DELETE",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

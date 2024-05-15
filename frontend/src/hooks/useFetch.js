@@ -9,7 +9,9 @@ const useFetch = (url) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await fetch(url);
+        const res = await fetch(url, {
+          credentials: "include",
+        });
         if (!res.ok) {
           setError("Lỗi kết nối đến csdl!");
         }

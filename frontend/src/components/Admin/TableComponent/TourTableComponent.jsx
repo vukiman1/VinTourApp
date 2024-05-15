@@ -1,62 +1,112 @@
-import { Table, Button, Popconfirm } from "antd";
 import React from "react";
-import { BASE_URL } from "../../../utils/config";
-import useFetch from "../../../hooks/useFetch";
+import { Table, Button } from "antd";
+import useFetch from "./../../../hooks/useFetch";
+import { BASE_URL } from "./../../../utils/config";
 
-const UserTableComponent = ({ onEdit, onDelete }) => {
-  const { data: users, refetch } = useFetch(`${BASE_URL}/users`);
+const TourTableComponent = (props) => {
+  const { selectionType = "checkbox" } = props;
 
   const handleEdit = (record) => {
-    onEdit(record); // Pass selected user data to the modal
+    // Xử lý logic khi nhấn nút Sửa
+    console.log("Edit:", record);
   };
 
   const handleDelete = (record) => {
-    onDelete(record); // Call the delete function passed as prop
+    // Xử lý logic khi nhấn nút Xóa
+    console.log("Delete:", record);
   };
+
+  const { data: tours } = useFetch(`${BASE_URL}/tours`);
+  console.log(tours);
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "username",
-      key: "username",
+      title: "Title",
+      dataIndex: "title",
+      render: (text) => <a>{text}</a>,
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "City",
+      dataIndex: "city",
     },
+
     {
-      title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Price",
+      dataIndex: "price",
     },
     {
       title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <>
-          <Button onClick={() => handleEdit(record)}>Update</Button>
-          <Popconfirm
-            title="Are you sure to delete this user?"
-            onConfirm={() => handleDelete(record)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button style={{ marginLeft: "8px" }} danger>
-              Delete
-            </Button>
-          </Popconfirm>
-        </>
+      dataIndex: "action",
+      render: (_, record) => (
+        <span>
+          <Button className="me-2" onClick={() => handleEdit(record)}>
+            Update
+          </Button>
+          <Button onClick={() => handleDelete(record)}>Delete</Button>
+        </span>
       ),
     },
   ];
 
-  return <Table dataSource={users} columns={columns} rowKey="_id" />;
+  const data = [
+    {
+      key: "1",
+      title: "John Brown",
+      location: "john.brown@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
+      action: "online",
+    },
+    {
+      key: "2",
+      title: "Jim Green",
+      location: "jim@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
+      action: "online",
+    },
+    {
+      key: "3",
+      title: "Joe Black",
+      location: "john.brown@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
+      action: "online",
+    },
+    {
+      key: "4",
+      title: "Disabled User",
+      location: "john.brown@gmail.com",
+      hotel: "New York No. 1 Lake Park",
+      price: "0123456789",
+      action: "online",
+    },
+  ];
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.title === "Disabled User",
+      title: record.title,
+    }),
+  };
+
+  return (
+    <Table
+      rowSelection={{
+        type: selectionType,
+        ...rowSelection,
+      }}
+      columns={columns}
+      dataSource={tours}
+    />
+  );
 };
 
-export default UserTableComponent;
+export default TourTableComponent;
