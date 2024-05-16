@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext,useEffect} from "react";
 import "../styles/tour-details.css";
 import { Container, Row, Col, Form, ListGroup } from "reactstrap";
 import { useParams } from "react-router-dom";
@@ -15,6 +15,8 @@ import { BASE_URL } from "../utils/config";
 import { AuthContext } from "../context/AuthContext";
 import Subtitle from "../shared/Subtitle";
 import FeatureTourList from "../components/Featured-tours/FeatureTourList";
+
+import HotelModal from "../shared/HotelModal";
 
 const TourDetails = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -78,6 +80,67 @@ const TourDetails = () => {
     }
   };
 
+
+  //Hotel
+  const [hotels , setHotels] = useState([]);
+ 
+  const [selectedHotelInfo, setSelectedHotelInfo] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleHotelHover = (hotelName) => {
+    const seletedHotel = hotels.find((hotel) => hotel.name === hotelName);
+    setSelectedHotelInfo(seletedHotel);
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+  useEffect(() => {
+    if (tour) {
+      const { title } = tour;
+      const fetchHotels = async () => {
+        try {
+          const response = await fetch(`${BASE_URL}/hotel/tour/${title}`);
+          const data = await response.json();
+          if (response.ok) {
+            setHotels(data.data);
+          } else {
+            throw new Error(data.message);
+          }
+        } catch (error) {
+          console.error("Error fetching hotels:", error);
+        }
+      };
+
+      fetchHotels();
+    }
+  }, [id, tour]);
+
+  
+  const renderHotels = () => {
+    return (
+      <div className="select-hotel">
+      {hotels.map((hotel) => (
+        <div
+          key={hotel._id}
+          className="hotel-option"
+          onMouseEnter={() => handleHotelHover(hotel.name)}
+        >
+          {hotel.name}
+        </div>
+      ))}
+      {isHovered && (
+        <HotelModal
+          isOpen={isHovered}
+          toggle={() => setIsHovered(false)}
+          hotelInfo={selectedHotelInfo}
+        />
+      )}
+    </div>
+  );
+  };
+
   return (
     <>
       <section>
@@ -123,14 +186,24 @@ const TourDetails = () => {
                       </span>
                       <span>
                         <i class="ri-hotel-line"></i> {hotel}
+                        <div onMouseLeave={handleMouseLeave}>
+                          {renderHotels()} 
+                        </div>
                       </span>
                       <span>
                         <i class="ri-group-line"></i> {maxGroupSize} người
                       </span>
                     </div>
                     <h5>Mô tả</h5>
-                    <p>{desc}</p>
-                  </div>
+                    {desc.map((day, index) => (
+                      <div key={index}>
+                        <h5>{day.day} : </h5>
+                        {day.activities.map((activity, i) => (
+                          <p key={i}>{activity}</p>
+                        ))}
+                      </div>
+                    ))}
+                    </div>
                   {/* tour reivews section */}
                   <div className="tour_reviews mt-4">
                     <h4>Reviews ({reviews?.length} reviews)</h4>

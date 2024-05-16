@@ -30,7 +30,7 @@ const TourCard = ({ tour }) => {
               )}
             </span>
           </div>
-
+              
           <h5 className="tour-title">
             <Link to={`/tours/${_id}`} className="title">
               {title}

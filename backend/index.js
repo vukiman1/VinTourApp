@@ -9,6 +9,7 @@ import userRoute from "./routers/users.js";
 import authRoute from "./routers/auth.js";
 import reviewRoute from "./routers/reviews.js";
 import bookingRoute from "./routers/bookings.js";
+import hotelRoute from "./routers/hotel.js"
 
 dotenv.config();
 const app = express();
@@ -39,7 +40,7 @@ app.use("/api/v1/tours", tourRoute);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/review", reviewRoute);
 app.use("/api/v1/booking", bookingRoute);
-
+app.use("/api/v1/hotel", hotelRoute);
 app.listen(port, () => {
   connect();
   console.log(`Server is running on port ${port}`);

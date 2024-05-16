@@ -128,21 +128,20 @@ export const getTourBySearch = async (req, res) => {
 
 //get featured tour
 export const getFeaturedTour = async (req, res) => {
-  try {
-    const tours = await Tour.find({ featured: true })
-      .limit(8)
-      .populate("reviews");
-    res.status(200).json({
-      success: true,
-      message: "Get all tour successfully",
-      count: `${tours.length}`,
-      data: tours,
-    });
-  } catch (err) {
-    res.status(404).json({
-      success: false,
-      message: "Not Found!",
-    });
+  
+  try{
+      const tours = await Tour.find({featured:true}).populate("reviews").limit(8);
+      res.status(200).json({
+          success:true, 
+          message:'Successfull', 
+          data:tours})
+  }
+  catch(err){
+      res.status(404).json({
+          success:false, 
+          message:'not found',
+
+      })
   }
 };
 

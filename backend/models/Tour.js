@@ -23,9 +23,22 @@ const tourSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    desc: {
+    desc: [
+      {
+        day: {
+          type: String,
+          required: true,
+        },
+        activities: [
+          {
+            type: String,
+            required: true,
+          },
+        ],
+      },
+    ],
+    hotel: {
       type: String,
-      required: true,
     },
     price: {
       type: Number,
@@ -35,14 +48,12 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-
     reviews: [
       {
         type: mongoose.Types.ObjectId,
         ref: "Review",
       },
     ],
-
     featured: {
       type: Boolean,
       default: false,
