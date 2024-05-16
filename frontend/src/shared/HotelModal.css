@@ -17,7 +17,50 @@
 	background-color: #ddd;
 	border: 4px solid #fff;
 }
-Modal {
-    background-color: rgba(#000, 0.25);
+.modal-title{
+	display: block;
+	text-align: left;
 
+}
+.modal-title p{
+	font-family: inherit;
+	font-size: 1.4 rem;
+	font-weight: bold;
+}
+.img-hotel {
+	box-sizing: border-box;
+    height: 300px;
+	width: 100%;
+	padding:10px;
+	object-fit:cover;
+	
+
+}
+
+.star-rating {
+	display: flex;
+	align-items: center;
+	
+}
+.body-info{
+	background-color: #ccc;
+}
+  
+.star {
+	font-size: 1.5rem;
+	color: #ccc; 
+	margin-right: 5px;
+	position: relative;
+  }
+  
+.star.filled {
+	color: #ffcc00; 
+  }
+  
+.star.half::before {
+	content: '\2605'; 
+	color: #ffcc00; 
+	position: absolute;
+	width: 50%;
+	overflow: hidden;
 }
