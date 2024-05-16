@@ -1,0 +1,14 @@
+.qrPicture img 
+{
+    max-width: 60%;
+    margin: 10px;
+    border: 1px solid black;
+}
+.pa 
+{
+    text-align: center;
+}
+.button 
+{
+    text-align: center;
+}

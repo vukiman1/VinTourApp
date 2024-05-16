@@ -11,6 +11,7 @@ import ThankYou from "../pages/ThankYou";
 import Profile from "../pages/Profile";
 import History from "../pages/History";
 import About from "../pages/About";
+import Payment from "../pages/Payment";
 const Routers = () => {
   return (
     <Routes>
@@ -21,6 +22,7 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/thank-you" element={<ThankYou />} />
+      <Route path="/tours/payment/:id" element={<Payment />} />
       <Route path="/tours/search?" element={<SearchResultList />} />
       <Route path="/history/:id" element={<History />} />
       <Route path="/profile" element={<Profile />} />

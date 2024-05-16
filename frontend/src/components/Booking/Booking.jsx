@@ -54,7 +54,7 @@ const Booking = ({ tour, avgRating }) => {
         console.log("????");
         return alert(result.message);
       }
-      navigate("/thank-you");
+      navigate(`/tours/payment/${_id}`);
     } catch (error) {
       alert(error.message);
     }
@@ -106,6 +106,8 @@ const Booking = ({ tour, avgRating }) => {
               type="number"
               placeholder="Số khách hàng"
               id="guestSize"
+              min={1}
+              defaultValue={1}
               required
               onChange={handleChange}
             />

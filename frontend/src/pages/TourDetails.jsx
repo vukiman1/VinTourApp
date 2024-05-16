@@ -27,7 +27,6 @@ const TourDetails = () => {
   // call API va load Data tu database
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
 
-  // destructue properties from tour object
   const {
     photo,
     title,
@@ -111,7 +110,7 @@ const TourDetails = () => {
                         )}
                       </span>
                       <span>
-                        <i className="ri-map-pin-fill"></i> {address}
+                        <i className="ri-time-line"></i> {address}
                       </span>
                     </div>
                     <div className="tour_extra-detail">
