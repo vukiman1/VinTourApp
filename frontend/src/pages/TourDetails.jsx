@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext,useEffect} from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import "../styles/tour-details.css";
 import { Container, Row, Col, Form, ListGroup } from "reactstrap";
 import { useParams } from "react-router-dom";
@@ -34,7 +34,7 @@ const TourDetails = () => {
     title,
     desc,
     price,
-    address,
+    duration,
     reviews,
     city,
     hotel,
@@ -80,10 +80,9 @@ const TourDetails = () => {
     }
   };
 
-
   //Hotel
-  const [hotels , setHotels] = useState([]);
- 
+  const [hotels, setHotels] = useState([]);
+
   const [selectedHotelInfo, setSelectedHotelInfo] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -117,28 +116,27 @@ const TourDetails = () => {
     }
   }, [id, tour]);
 
-  
   const renderHotels = () => {
     return (
       <div className="select-hotel">
-      {hotels.map((hotel) => (
-        <div
-          key={hotel._id}
-          className="hotel-option"
-          onMouseEnter={() => handleHotelHover(hotel.name)}
-        >
-          {hotel.name}
-        </div>
-      ))}
-      {isHovered && (
-        <HotelModal
-          isOpen={isHovered}
-          toggle={() => setIsHovered(false)}
-          hotelInfo={selectedHotelInfo}
-        />
-      )}
-    </div>
-  );
+        {hotels.map((hotel) => (
+          <div
+            key={hotel._id}
+            className="hotel-option"
+            onMouseEnter={() => handleHotelHover(hotel.name)}
+          >
+            {hotel.name}
+          </div>
+        ))}
+        {isHovered && (
+          <HotelModal
+            isOpen={isHovered}
+            toggle={() => setIsHovered(false)}
+            hotelInfo={selectedHotelInfo}
+          />
+        )}
+      </div>
+    );
   };
 
   return (
@@ -173,7 +171,7 @@ const TourDetails = () => {
                         )}
                       </span>
                       <span>
-                        <i className="ri-time-line"></i> {address}
+                        <i className="ri-time-line"></i> {duration}
                       </span>
                     </div>
                     <div className="tour_extra-detail">
@@ -187,7 +185,7 @@ const TourDetails = () => {
                       <span>
                         <i class="ri-hotel-line"></i> {hotel}
                         <div onMouseLeave={handleMouseLeave}>
-                          {renderHotels()} 
+                          {renderHotels()}
                         </div>
                       </span>
                       <span>
@@ -203,7 +201,7 @@ const TourDetails = () => {
                         ))}
                       </div>
                     ))}
-                    </div>
+                  </div>
                   {/* tour reivews section */}
                   <div className="tour_reviews mt-4">
                     <h4>Reviews ({reviews?.length} reviews)</h4>

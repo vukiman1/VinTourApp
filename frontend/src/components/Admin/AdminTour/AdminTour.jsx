@@ -1,35 +1,54 @@
-import { WrapperHeader } from "../AdminUser/style";
 import React, { useState } from "react";
+import { WrapperHeader } from "./style";
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Input, Upload, Modal } from "antd";
+import { Button, message } from "antd";
+import useFetch from "../../../hooks/useFetch";
+import { BASE_URL } from "../../../utils/config";
 import TourTableComponent from "../TableComponent/TourTableComponent";
+import TourModal from "./TourModal";
+
 const AdminTour = () => {
-  const { RangePicker } = DatePicker;
-  const { TextArea } = Input;
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentTour, setCurrentTour] = useState(null);
+  const { refetch } = useFetch(`${BASE_URL}/tours`);
 
-  const showModal = () => {
+  const showModal = (tour) => {
+    setCurrentTour(tour);
     setIsModalOpen(true);
   };
 
   const handleOk = () => {
     setIsModalOpen(false);
+    setCurrentTour(null);
+    refetch();
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setCurrentTour(null);
   };
+
+  const handleDelete = async (tour) => {
+    try {
+      const response = await fetch(`${BASE_URL}/tours/${tour._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        message.success("Tour deleted successfully");
+        refetch();
+      }
+    } catch (error) {
+      console.error("Failed to delete tour:", error);
+    }
+  };
+
   return (
     <div style={{ marginLeft: "40px" }}>
-      <WrapperHeader>Quản lí Tour</WrapperHeader>
-      <div style={{ marginTop: " 10px" }}>
+      <WrapperHeader>Quản lí tour</WrapperHeader>
+      <div style={{ marginTop: "10px" }}>
         <Button
           style={{
             height: "150px",
@@ -37,76 +56,21 @@ const AdminTour = () => {
             borderRadius: "6px",
             borderStyle: "dashed",
           }}
-          onClick={showModal}
+          onClick={() => showModal(null)}
         >
           <PlusOutlined style={{ fontSize: "60px" }} />
         </Button>
       </div>
       <div style={{ marginTop: "20px" }}>
-        <TourTableComponent />
+        <TourTableComponent onEdit={showModal} onDelete={handleDelete} />
       </div>
-      <Modal
-        title="Thêm Tour"
-        open={isModalOpen}
+      <TourModal
+        title={currentTour ? "Chỉnh sửa tour" : "Thêm tour"}
+        visible={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-      >
-        <Form
-          labelCol={{
-            span: 4,
-          }}
-          wrapperCol={{
-            span: 14,
-          }}
-          layout="horizontal"
-          style={{
-            maxWidth: 600,
-          }}
-        >
-          <Form.Item label="Title">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Location">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Hotel">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Price">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Time">
-            <RangePicker />
-          </Form.Item>
-          <Form.Item
-            label="Image"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-          >
-            <Upload action="/upload.do" listType="picture-card">
-              <button
-                style={{
-                  border: 0,
-                  background: "none",
-                }}
-                type="button"
-              >
-                <PlusOutlined />
-                <div
-                  style={{
-                    marginTop: 8,
-                  }}
-                >
-                  Upload
-                </div>
-              </button>
-            </Upload>
-          </Form.Item>
-          <Form.Item label="Description">
-            <TextArea rows={4} />
-          </Form.Item>
-        </Form>
-      </Modal>
+        tour={currentTour}
+      />
     </div>
   );
 };
