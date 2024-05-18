@@ -41,6 +41,7 @@ const items = [
   },
   {
     key:"5",
+    icon:<MoonOutlined />,
     label:"Hotel"
   },
 ];
