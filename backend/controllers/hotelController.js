@@ -4,6 +4,13 @@ import Hotel from "../models/Hotel.js";
 //create new hotel
 export const createHotel = async (req, res) => {
     try {
+      const existingHotel =await Hotel.findOne({titleTour:req.body.titleTour});
+      if(existingHotel){
+        res.status(400).json({
+          success:false,
+          message:"Mỗi tour chỉ có 1 khách sạn "
+        })
+      }
       const newHotel = new Hotel(req.body);
   
       const savedHotel = await newHotel.save();
