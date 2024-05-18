@@ -139,4 +139,5 @@
 .experience_image img.center_image {
   opacity: 1;
   width: 150px;
+  filter:contrast(120%);
 }
