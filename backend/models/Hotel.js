@@ -18,6 +18,7 @@ const hotelSchema = new mongoose.Schema(
         type: Number,
         default: 0,
       },
+
       titleTour:{
         type:String,
         required: true,
@@ -26,6 +27,16 @@ const hotelSchema = new mongoose.Schema(
       image: {
         type: String, 
       },
+      amenities:[
+        {
+          name:{
+            type:String,
+          },
+          icon:{
+            type:String,
+          }
+        }
+      ]
     },
     { timestamps: true }
   );

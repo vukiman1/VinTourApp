@@ -38,8 +38,9 @@ const AdminUser = () => {
         },
       });
       if (response.ok) {
-        message.success("User deleted successfully");
-        window.location.reload();
+        message.success("User deleted successfully").then(() => {
+          window.location.reload();
+        });
       }
     } catch (error) {
       console.error("Failed to delete user:", error);

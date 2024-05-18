@@ -4,6 +4,13 @@ import Hotel from "../models/Hotel.js";
 //create new hotel
 export const createHotel = async (req, res) => {
     try {
+      const existingHotel =await Hotel.findOne({titleTour:req.body.titleTour});
+      if(existingHotel){
+        res.status(400).json({
+          success:false,
+          message:"Mỗi tour chỉ có 1 khách sạn "
+        })
+      }
       const newHotel = new Hotel(req.body);
   
       const savedHotel = await newHotel.save();
@@ -48,22 +55,22 @@ export const getSingleHotel = async (req, res) => {
   };
 
 //get all hotel
-export const getAllHotel = async(res, req) =>{
+export const getAllHotel = async(req, res) =>{
  
-  try{
-    const hotels = await Hotel.find({})
+  try {
+    const hotels = await Hotel.find({});
     res.status(200).json({
-        success:true, 
-        message:'Successfully ', 
-        data:hotels})
-}
-catch(err){
+      success: true,
+      message: 'Successfully fetched all hotels',
+      data: hotels
+    });
+  } catch (err) {
     res.status(404).json({
-        success:false, 
-        message:'not found',
-
-    })
-}
+      success: false,
+      message: 'Failed to fetch hotels',
+      error: err.message
+    });
+  }
 };
 //get hotel by title tour
 export const getHotelsByTourTitle = async (req, res) => {

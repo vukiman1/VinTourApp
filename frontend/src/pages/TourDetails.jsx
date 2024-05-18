@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext,useEffect} from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import "../styles/tour-details.css";
 import { Container, Row, Col, Form, ListGroup } from "reactstrap";
 import { useParams } from "react-router-dom";
@@ -19,12 +19,14 @@ import FeatureTourList from "../components/Featured-tours/FeatureTourList";
 import HotelModal from "../shared/HotelModal";
 
 const TourDetails = () => {
-  // window.scrollTo({ top: 0, behavior: "smooth" });
   const { id } = useParams();
   const reviewMsgRef = useRef("");
-  const [tourRating, setTourRating] = useState(null);
+  const [selectedRating, setSelectedRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
 
   // call API va load Data tu database
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
@@ -59,7 +61,7 @@ const TourDetails = () => {
       const reviewObj = {
         username: user?.username,
         reviewText,
-        rating: tourRating,
+        rating: selectedRating,
       };
 
       const res = await fetch(`${BASE_URL}/review/${id}`, {
@@ -80,10 +82,8 @@ const TourDetails = () => {
     }
   };
 
-
   //Hotel
-  const [hotels , setHotels] = useState([]);
- 
+  const [hotels, setHotels] = useState([]);
   const [selectedHotelInfo, setSelectedHotelInfo] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -117,28 +117,27 @@ const TourDetails = () => {
     }
   }, [id, tour]);
 
-  
   const renderHotels = () => {
     return (
       <div className="select-hotel">
-      {hotels.map((hotel) => (
-        <div
-          key={hotel._id}
-          className="hotel-option"
-          onMouseEnter={() => handleHotelHover(hotel.name)}
-        >
-          {hotel.name}
-        </div>
-      ))}
-      {isHovered && (
-        <HotelModal
-          isOpen={isHovered}
-          toggle={() => setIsHovered(false)}
-          hotelInfo={selectedHotelInfo}
-        />
-      )}
-    </div>
-  );
+        {hotels.map((hotel) => (
+          <div
+            key={hotel._id}
+            className="hotel-option"
+            onMouseEnter={() => handleHotelHover(hotel.name)}
+          >
+            {hotel.name}
+          </div>
+        ))}
+        {isHovered && (
+          <HotelModal
+            isOpen={isHovered}
+            toggle={() => setIsHovered(false)}
+            hotelInfo={selectedHotelInfo}
+          />
+        )}
+      </div>
+    );
   };
 
   return (
@@ -178,55 +177,57 @@ const TourDetails = () => {
                     </div>
                     <div className="tour_extra-detail">
                       <span>
-                        <i class="ri-map-pin-line"></i> {city}
+                        <i className="ri-map-pin-line"></i> {city}
                       </span>
                       <span>
-                        <i class="ri-money-dollar-circle-line"></i>{" "}
+                        <i className="ri-money-dollar-circle-line"></i>{" "}
                         {formatPrice(price)}đ
                       </span>
                       <span>
-                        <i class="ri-hotel-line"></i> {hotel}
+                        <i className="ri-hotel-line"></i> {hotel}
                         <div onMouseLeave={handleMouseLeave}>
-                          {renderHotels()} 
+                          {renderHotels()}
                         </div>
                       </span>
                       <span>
-                        <i class="ri-group-line"></i> {maxGroupSize} người
+                        <i className="ri-group-line"></i> {maxGroupSize} người
                       </span>
                     </div>
                     <h5>Mô tả</h5>
                     {desc.map((day, index) => (
                       <div key={index}>
-                        <h5>{day.day} : </h5>
+                        <h5>{day.day} :</h5>
                         {day.activities.map((activity, i) => (
                           <p key={i}>{activity}</p>
                         ))}
                       </div>
                     ))}
-                    </div>
-                  {/* tour reivews section */}
+                  </div>
+                  {/* tour reviews section */}
                   <div className="tour_reviews mt-4">
                     <h4>Reviews ({reviews?.length} reviews)</h4>
                     <Form onSubmit={submitHandler}>
-                      <div
-                        className=" rating_group d-flex 
-                  align-items-center gap-3 mb-4 "
-                      >
-                        <span onClick={() => setTourRating(1)}>
-                          1 <i className="ri-star-s-fill"></i>
-                        </span>
-                        <span onClick={() => setTourRating(2)}>
-                          2 <i className="ri-star-s-fill"></i>
-                        </span>
-                        <span onClick={() => setTourRating(3)}>
-                          3 <i className="ri-star-s-fill"></i>
-                        </span>
-                        <span onClick={() => setTourRating(4)}>
-                          4 <i className="ri-star-s-fill"></i>
-                        </span>
-                        <span onClick={() => setTourRating(5)}>
-                          5 <i className="ri-star-s-fill"></i>
-                        </span>
+                      <div className="rating_group d-flex align-items-center gap-3 mb-4">
+                        {[...Array(5)].map((_, i) => {
+                          const ratingValue = i + 1;
+                          return (
+                            <span
+                              key={ratingValue}
+                              onClick={() => setSelectedRating(ratingValue)}
+                              onMouseEnter={() => setHoverRating(ratingValue)}
+                              onMouseLeave={() => setHoverRating(0)}
+                              style={{
+                                cursor: 'pointer',
+                                color: ratingValue <= (hoverRating || selectedRating)
+                                  ? secondaryColor
+                                  : '#e4e5e9',
+                                fontSize: '24px',
+                              }}
+                            >
+                              <i className="ri-star-s-fill"></i>
+                            </span>
+                          );
+                        })}
                       </div>
 
                       <div className="review_input">
@@ -246,7 +247,7 @@ const TourDetails = () => {
 
                     <ListGroup className="user_reviews">
                       {reviews?.map((review) => (
-                        <div className="review_item">
+                        <div className="review_item" key={review._id}>
                           <img src={avatar} alt="" />
 
                           <div className="w-100">
@@ -270,7 +271,7 @@ const TourDetails = () => {
                       ))}
                     </ListGroup>
                   </div>
-                  {/* tour reivews section end*/}
+                  {/* tour reviews section end */}
                 </div>
               </Col>
               <Col lg="4">

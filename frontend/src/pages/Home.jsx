@@ -6,6 +6,11 @@ import heroImg02 from "../assets/images/caubantay.jpg";
 import heroVideo from "../assets/images/mucangchai.mp4";
 import worldImg from "../assets/images/world.png";
 import experienceImg from "../assets/images/experience.png";
+import goTour1 from "../assets/images/goTour1.jpg";
+import goTour2 from "../assets/images/goTour2.jpg";
+import goTour3 from "../assets/images/goTour3.jpg";
+import goTour4 from "../assets/images/goTour4.jpg";
+import goTour5 from "../assets/images/goTour5.jpg";
 
 import Subtitle from "../shared/Subtitle";
 
@@ -126,7 +131,11 @@ const Home = () => {
             </Col>
             <Col lg="6">
               <div className="experience_image">
-                <img src={experienceImg} alt="" />
+                <img src={goTour1}  alt="" />
+                <img src={goTour2}  alt="" />
+                <img src={goTour3} className="center_image" alt="" />
+                <img src={goTour4}  alt="" />
+                <img src={goTour5}  alt="" />
               </div>
             </Col>
           </Row>

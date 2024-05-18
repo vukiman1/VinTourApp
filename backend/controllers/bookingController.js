@@ -66,3 +66,44 @@ export const getBookingByUser = async (req, res) => {
     });
   }
 };
+
+export const deleteBooking = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    await Booking.findByIdAndDelete(id);
+    res.status(200).json({
+      success: true,
+      message: "Successfully delete",
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete. Try again",
+    });
+  }
+};
+
+export const updateBooking = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const updatedBooking = await Booking.findByIdAndUpdate(
+      id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json({
+      success: true,
+      message: "Successfully updated",
+      data: updatedBooking,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to update. Try again",
+    });
+  }
+};
