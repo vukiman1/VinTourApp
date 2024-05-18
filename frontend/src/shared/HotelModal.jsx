@@ -1,6 +1,6 @@
 import React from "react";
 import "./HotelModal.css"
-import { Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Modal, ModalHeader, ModalBody,ModalFooter } from "reactstrap";
 
 const HotelModal = ({ isOpen, toggle, hotelInfo }) => {
 
@@ -34,16 +34,18 @@ const HotelModal = ({ isOpen, toggle, hotelInfo }) => {
           <div className="star-rating">
             <h3>Thông tin khách sạn</h3>
           </div>
-          
-          <div className="body-info">
+          </div>
+      </ModalBody>
+        <ModalFooter>
+          <div className="body-info bg-light">
             <div>
             <strong>Đánh giá: </strong>{renderStars(hotelInfo?.rating)}
             </div>
             <p><strong>Địa chỉ:</strong> {hotelInfo?.address}</p>
           </div>
-        </div>
+        </ModalFooter>
+        
        
-      </ModalBody>
     </Modal>
   );
 };

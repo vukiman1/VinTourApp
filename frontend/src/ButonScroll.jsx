@@ -14,7 +14,7 @@ const ButonScroll = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []); // Không có dependencies để chỉ chạy một lần khi component được tạo
+  }, []); 
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
