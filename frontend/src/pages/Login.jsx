@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-
 import { Container, Row, Col, Form, FormGroup, Button } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { notification } from "antd";
 import "../styles/login.css";
 
 import LoginImg from "../assets/images/dulichviet.jpeg";
@@ -30,6 +30,13 @@ const Login = () => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
+  const openNotificationWithIcon = (type, message, description) => {
+    notification[type]({
+      message,
+      description,
+    });
+  };
+
   const handleClick = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
@@ -45,15 +52,27 @@ const Login = () => {
 
       const result = await res.json();
 
-      if (!res.ok) return alert("Sai tên đăng nhập hoặc mật khẩu!");
+      if (!res.ok) {
+        return openNotificationWithIcon(
+          "error",
+          "Error",
+          "Sai tên đăng nhập hoặc mật khẩu!"
+        );
+      }
+
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: { user: result.data, role: result.role },
       });
-      alert(`Đăng nhập thành công!`);
+
+      openNotificationWithIcon("success", "Success", "Đăng nhập thành công!");
       navigate("/");
     } catch (err) {
-      alert(`Lỗi máy chủ, đăng nhập thất bại!`);
+      openNotificationWithIcon(
+        "error",
+        "Error",
+        "Lỗi máy chủ, đăng nhập thất bại!"
+      );
       dispatch({ type: "LOGIN_FAILURE", payload: err.message });
     }
   };
@@ -67,7 +86,7 @@ const Login = () => {
               <div className="login_container d-fex justify-content-between">
                 <div className="login_form">
                   <div className="user">
-                    <img src={usericon} alt="" />
+                    <img src={usericon} alt="User Icon" />
                   </div>
                   <h2>Đăng nhập</h2>
 
@@ -92,7 +111,9 @@ const Login = () => {
                         />
                         <span className="eyeIcon" onClick={togglePassword}>
                           <i
-                            class={visible ? "ri-eye-line" : "ri-eye-off-line"}
+                            className={
+                              visible ? "ri-eye-line" : "ri-eye-off-line"
+                            }
                           ></i>
                         </span>
                       </div>

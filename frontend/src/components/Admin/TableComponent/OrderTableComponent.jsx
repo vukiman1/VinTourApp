@@ -26,7 +26,7 @@ const OrderTableComponent = ({ onEdit, onDelete }) => {
       }
     } catch (error) {
       console.error("Failed to delete order:", error);
-      message.error("An error occurred while deleting the order");
+      //message.error("An error occurred while deleting the order");
     }
   };
 

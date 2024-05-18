@@ -1,27 +1,43 @@
 import React, { useRef } from "react";
 import "./searchbar.css";
 import { Col, Form, FormGroup } from "reactstrap";
-
+import { notification } from "antd";
 import { BASE_URL } from "../utils/config";
 import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
   const locationRef = useRef("");
   const navigate = useNavigate();
-
+  const openNotificationWithIcon = (type, message, description) => {
+    notification[type]({
+      message,
+      description,
+    });
+  };
   const searchHandler = async (e) => {
+    e.preventDefault();
     const location = locationRef.current.value;
 
     if (location === "") {
-      return alert("Vui lòng nhập địa điểm muốn đi!");
+      return openNotificationWithIcon(
+        "warning",
+        "Warning",
+        "Vui lòng nhập địa điểm muốn đi!"
+      );
     }
-    const res = await fetch(
-      `${BASE_URL}/tours/search/getTourBySearch?city=${location}`
-    );
-    console.log(`${BASE_URL}/tours/search/getTourBySearch?city=${location}`);
-    if (!res.ok) alert("Something went wrong");
-    const result = await res.json();
-    navigate(`/tours/search?city=${location}`, { state: result.data });
+    try {
+      const res = await fetch(
+        `${BASE_URL}/tours/search/getTourBySearch?city=${location}`
+      );
+      console.log(`${BASE_URL}/tours/search/getTourBySearch?city=${location}`);
+      if (!res.ok) {
+        throw new Error("Something went wrong");
+      }
+      const result = await res.json();
+      navigate(`/tours/search?city=${location}`, { state: result.data });
+    } catch (error) {
+      openNotificationWithIcon("error", "Error", error.message);
+    }
   };
 
   return (
