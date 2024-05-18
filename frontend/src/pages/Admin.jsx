@@ -4,6 +4,7 @@ import {
   UserOutlined,
   ShoppingOutlined,
   FundOutlined,
+  
 } from "@ant-design/icons";
 
 import { Menu } from "antd";
@@ -12,6 +13,7 @@ import AdminTour from "../components/Admin/AdminTour/AdminTour";
 import AdminOrder from "../components/Admin/AdminOrder/AdminOrder";
 import AdminRevenue from "../components/Admin/AdminRevenue/AdminRevenue";
 import HeaderComponent from "../components/Admin/AdminHeader/HeaderComponent";
+import AdminHotel from "../components/Admin/AdminHotel/AdminHotel";
 
 const items = [
   {
@@ -37,6 +39,10 @@ const items = [
     icon: <FundOutlined />,
     label: "Doanh thu",
   },
+  {
+    key:"5",
+    label:"Hotel"
+  },
 ];
 
 const Admin = () => {
@@ -52,6 +58,8 @@ const Admin = () => {
         return <AdminOrder />;
       case "4":
         return <AdminRevenue />;
+      case "5":
+        return <AdminHotel />
       default:
         return <AdminUser />;
     }

@@ -79,16 +79,16 @@ const UserModal = ({ title, visible, onOk, onCancel, user }) => {
         <Form.Item
           label="Phone"
           name="phone"
-          rules={[
-            { required: true, message: "Please input your phone number!" },
-          ]}
+          // rules={[
+          //   { required: true, message: "Please input your phone number!" },
+          // ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="Address"
           name="address"
-          rules={[{ required: true, message: "Please input your address!" }]}
+          // rules={[{ required: true, message: "Please input your address!" }]}
         >
           <Input />
         </Form.Item>
