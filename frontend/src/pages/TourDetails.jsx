@@ -19,7 +19,7 @@ import FeatureTourList from "../components/Featured-tours/FeatureTourList";
 import HotelModal from "../shared/HotelModal";
 
 const TourDetails = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  // window.scrollTo({ top: 0, behavior: "smooth" });
   const { id } = useParams();
   const reviewMsgRef = useRef("");
   const [tourRating, setTourRating] = useState(null);
