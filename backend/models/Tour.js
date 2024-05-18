@@ -24,18 +24,16 @@ const tourSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      default: "", // Default to an empty string if no photo is provided
+      default: "",
     },
     desc: [
       {
         day: {
           type: String,
-          required: true,
         },
         activities: [
           {
             type: String,
-            required: true,
           },
         ],
       },
