@@ -26,7 +26,9 @@ const TourDetails = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--secondary-color');
+  const secondaryColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--secondary-color");
 
   // call API va load Data tu database
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
@@ -36,7 +38,7 @@ const TourDetails = () => {
     title,
     desc,
     price,
-    address,
+    duration,
     reviews,
     city,
     hotel,
@@ -172,7 +174,7 @@ const TourDetails = () => {
                         )}
                       </span>
                       <span>
-                        <i className="ri-time-line"></i> {address}
+                        <i className="ri-time-line"></i> {duration}
                       </span>
                     </div>
                     <div className="tour_extra-detail">
@@ -217,11 +219,12 @@ const TourDetails = () => {
                               onMouseEnter={() => setHoverRating(ratingValue)}
                               onMouseLeave={() => setHoverRating(0)}
                               style={{
-                                cursor: 'pointer',
-                                color: ratingValue <= (hoverRating || selectedRating)
-                                  ? secondaryColor
-                                  : '#e4e5e9',
-                                fontSize: '24px',
+                                cursor: "pointer",
+                                color:
+                                  ratingValue <= (hoverRating || selectedRating)
+                                    ? secondaryColor
+                                    : "#e4e5e9",
+                                fontSize: "24px",
                               }}
                             >
                               <i className="ri-star-s-fill"></i>

@@ -54,7 +54,7 @@ const Booking = ({ tour, avgRating }) => {
         console.log("????");
         return alert(result.message);
       }
-      navigate(`/tours/payment/${_id}`);
+      navigate(`/tours/payment/${_id}`, { state: price, title });
     } catch (error) {
       alert(error.message);
     }
