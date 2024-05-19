@@ -27,6 +27,10 @@ const tourSchema = new mongoose.Schema(
       default: "",
       required: true,
     },
+    goLocation: {
+      type: String,
+      default: "",
+    },
 
     desc: [
       {

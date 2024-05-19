@@ -3,6 +3,7 @@ import React from "react";
 import useFetch from "../../../hooks/useFetch";
 import { BASE_URL } from "../../../utils/config";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import formatPrice from "../../../hooks/formatPrice";
 
 const OrderTableComponent = ({ onEdit, onDelete }) => {
   const { data: orders } = useFetch(`${BASE_URL}/booking`);
@@ -68,7 +69,8 @@ const OrderTableComponent = ({ onEdit, onDelete }) => {
     },
     {
       title: "Total Price",
-      dataIndex: "price",
+      render: (record) => <p>{formatPrice(record.price)}</p>,
+
       key: "price",
     },
     {

@@ -161,6 +161,13 @@ const TourModal = ({ title, visible, onOk, onCancel, tour }) => {
           <Input />
         </Form.Item>
         <Form.Item
+          label="Lộ trình"
+          name="goLocation"
+          rules={[{ required: true, message: "Please input go location!" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
           label="Persons"
           name="maxGroupSize"
           rules={[

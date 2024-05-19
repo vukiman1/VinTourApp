@@ -3,6 +3,7 @@ import React from "react";
 import useFetch from "../../../hooks/useFetch";
 import { BASE_URL } from "../../../utils/config";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import formatPrice from "../../../hooks/formatPrice";
 
 const TourTableComponent = ({ onEdit, onDelete }) => {
   const { data: tours } = useFetch(`${BASE_URL}/tours/all/nopage`);
@@ -40,8 +41,8 @@ const TourTableComponent = ({ onEdit, onDelete }) => {
     },
     {
       title: "Price",
-      dataIndex: "price",
       key: "price",
+      render: (record) => <p>{formatPrice(record.price)}</p>,
     },
 
     {

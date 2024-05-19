@@ -14,8 +14,11 @@ const ThankYou = () => {
             <div className="thank-you">
               <span>
                 <i className="ri-checkbox-circle-line">
-                  <h1 className="mb-3 fw-semibolod">Thank You</h1>
-                  <h3 className="mb-4">Bạn đã đặt tour thành công</h3>
+                  <h1 className="mb-3 fw-semibolod">Thành công</h1>
+                  <h3 className="mb-4">
+                    Cảm ơn bạn đã đặt tour của chúng tôi, hy vọng bạn có một
+                    trải nghiệm thú vị.
+                  </h3>
 
                   <Button className="btn primary__btn w-30">
                     <Link to="/home">Quay trở lại trang chủ</Link>

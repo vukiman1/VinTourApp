@@ -3,11 +3,11 @@ import { Container, Row, Col } from "reactstrap";
 import { useParams, Link, useLocation } from "react-router-dom";
 import qr from "../assets/images/qr.jpg";
 import "../styles/payment.css";
+import formatPrice from "./../hooks/formatPrice";
 const Payment = () => {
   const { id } = useParams();
   const location = useLocation();
-  const [price, title] = useState(location.state);
-  console.log(title);
+  const [data] = useState(location.state);
   return (
     <Container>
       <Row>
@@ -18,9 +18,9 @@ const Payment = () => {
         </Col>
         <Col lg="6" className="mt-5">
           <h2>Vui lòng quét mã QR để thanh toán</h2>
-          <p className="pa">Nội dung chuyển khoản: Đặt tour {title}</p>
+          <p className="pa">Nội dung chuyển khoản: Đặt tour {data.title}</p>
           <p className="pa">
-            <strong>Số tiền: {price}</strong>{" "}
+            <strong>Số tiền: {formatPrice(data.price)}</strong>{" "}
           </p>
           <div className="button">
             <button className="btn primary__btn ms-2 ">

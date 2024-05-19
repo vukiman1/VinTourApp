@@ -1,21 +1,18 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
 import "../styles/tour-details.css";
 import { Container, Row, Col, Form, ListGroup } from "reactstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Spin, notification } from "antd";
+
 import calculateAvgRating from "../utils/avgRating";
 import avatar from "../assets/images/avatar.jpg";
 import Booking from "../components/Booking/Booking";
-import { Spin } from "antd";
-import { useNavigate } from "react-router-dom";
-
 import formatPrice from "../hooks/formatPrice";
 import useFetch from "../hooks/useFetch";
 import { BASE_URL } from "../utils/config";
-
 import { AuthContext } from "../context/AuthContext";
 import Subtitle from "../shared/Subtitle";
 import FeatureTourList from "../components/Featured-tours/FeatureTourList";
-
 import HotelModal from "../shared/HotelModal";
 
 const TourDetails = () => {
@@ -30,9 +27,8 @@ const TourDetails = () => {
     document.documentElement
   ).getPropertyValue("--secondary-color");
 
-  // call API va load Data tu database
+  // Fetch tour data
   const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
-
   const {
     photo,
     title,
@@ -42,21 +38,22 @@ const TourDetails = () => {
     reviews,
     city,
     hotel,
+    goLocation,
     maxGroupSize,
-  } = tour;
+  } = tour || {};
 
-  const { totalRating, avgRating } = calculateAvgRating(reviews);
+  const { totalRating, avgRating } = calculateAvgRating(reviews || []);
 
-  // gui request den sever
+  // Submit review
   const submitHandler = async (e) => {
     e.preventDefault();
     const reviewText = reviewMsgRef.current.value;
-    if (reviewText === "") {
-      return alert(`Chưa nhập nội dung!`);
+    if (!reviewText) {
+      return notification.warning({ message: "Chưa nhập nội dung!" });
     }
     try {
-      if (!user || user === undefined || user === null) {
-        alert("Vui lòng đăng nhập để bình luận!");
+      if (!user) {
+        notification.warning({ message: "Vui lòng đăng nhập để bình luận!" });
         return navigate("/login");
       }
 
@@ -67,40 +64,39 @@ const TourDetails = () => {
       };
 
       const res = await fetch(`${BASE_URL}/review/${id}`, {
-        method: "post",
+        method: "POST",
         headers: {
-          "content-type": "application/json",
+          "Content-Type": "application/json",
         },
         credentials: "include",
         body: JSON.stringify(reviewObj),
       });
+
       const result = await res.json();
       if (!res.ok) {
-        return alert(result.message);
+        return notification.error({ message: result.message });
       }
-      alert(result.message);
+      notification.success({ message: result.message });
     } catch (error) {
-      alert(error.message);
+      notification.error({ message: error.message });
     }
   };
 
-  //Hotel
+  // Hotel related state and handlers
   const [hotels, setHotels] = useState([]);
   const [selectedHotelInfo, setSelectedHotelInfo] = useState(null);
-  const [isHovered, setIsHovered] = useState(false);
 
   const handleHotelHover = (hotelName) => {
-    const seletedHotel = hotels.find((hotel) => hotel.name === hotelName);
-    setSelectedHotelInfo(seletedHotel);
-    setIsHovered(true);
+    const selectedHotel = hotels.find((hotel) => hotel.name === hotelName);
+    setSelectedHotelInfo(selectedHotel);
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
+    setSelectedHotelInfo(null);
   };
+
   useEffect(() => {
     if (tour) {
-      const { title } = tour;
       const fetchHotels = async () => {
         try {
           const response = await fetch(`${BASE_URL}/hotel/tour/${title}`);
@@ -114,67 +110,39 @@ const TourDetails = () => {
           console.error("Error fetching hotels:", error);
         }
       };
-
       fetchHotels();
     }
-  }, [id, tour]);
-
-  const renderHotels = () => {
-    return (
-      <div className="select-hotel">
-        {hotels.map((hotel) => (
-          <div
-            key={hotel._id}
-            className="hotel-option"
-            onMouseEnter={() => handleHotelHover(hotel.name)}
-          >
-            {hotel.name}
-          </div>
-        ))}
-        {isHovered && (
-          <HotelModal
-            isOpen={isHovered}
-            toggle={() => setIsHovered(false)}
-            hotelInfo={selectedHotelInfo}
-          />
-        )}
-      </div>
-    );
-  };
+  }, [tour, title]);
 
   return (
     <>
       <section>
         <Container>
           {loading && (
-            <h4>
-              <Spin className="text-center" tip="Loading" size="large"></Spin>
-            </h4>
+            <Spin className="text-center" tip="Loading" size="large" />
           )}
           {error && <h4 className="text-center pt-5">{error}</h4>}
-          {!loading && !error && (
+          {!loading && !error && tour && (
             <Row>
               <Col lg="8">
                 <div className="tour_content">
-                  <img src={photo} alt="" />
-
+                  <img src={photo} alt={title} />
                   <div className="tour_infor">
                     <h2>{title}</h2>
                     <div className="d-flex align-items-center gap-5">
-                      <span className="tour_ratting d-flex align-items-center gap-1">
+                      <span className="tour_rating d-flex align-items-center gap-1">
                         <i
                           className="ri-star-fill"
-                          style={{ color: "var(--secondary-color)" }}
+                          style={{ color: secondaryColor }}
                         ></i>
-                        {avgRating === 0 ? null : avgRating}
-                        {totalRating === 0 ? (
-                          "Not Rated"
-                        ) : (
-                          <span>({reviews?.length})</span>
-                        )}
+                        {avgRating === 0 ? "Not Rated" : avgRating}
+                        {totalRating > 0 && <span>({reviews?.length})</span>}
                       </span>
                       <span>
                         <i className="ri-time-line"></i> {duration}
+                      </span>
+                      <span>
+                        <i class="ri-roadster-fill"></i> {goLocation}
                       </span>
                     </div>
                     <div className="tour_extra-detail">
@@ -188,7 +156,25 @@ const TourDetails = () => {
                       <span>
                         <i className="ri-hotel-line"></i> {hotel}
                         <div onMouseLeave={handleMouseLeave}>
-                          {renderHotels()}
+                          <div className="select-hotel">
+                            {hotels.map((hotel) => (
+                              <div
+                                key={hotel._id}
+                                className="hotel-option text-success"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => handleHotelHover(hotel.name)}
+                              >
+                                <b>{hotel.name}</b>
+                              </div>
+                            ))}
+                            {selectedHotelInfo && (
+                              <HotelModal
+                                isOpen={!!selectedHotelInfo}
+                                toggle={handleMouseLeave}
+                                hotelInfo={selectedHotelInfo}
+                              />
+                            )}
+                          </div>
                         </div>
                       </span>
                       <span>
@@ -205,7 +191,7 @@ const TourDetails = () => {
                       </div>
                     ))}
                   </div>
-                  {/* tour reviews section */}
+                  {/* Tour reviews section */}
                   <div className="tour_reviews mt-4">
                     <h4>Reviews ({reviews?.length} reviews)</h4>
                     <Form onSubmit={submitHandler}>
@@ -252,7 +238,6 @@ const TourDetails = () => {
                       {reviews?.map((review) => (
                         <div className="review_item" key={review._id}>
                           <img src={avatar} alt="" />
-
                           <div className="w-100">
                             <div className="d-flex align-items-center justify-content-between">
                               <div>
@@ -274,7 +259,7 @@ const TourDetails = () => {
                       ))}
                     </ListGroup>
                   </div>
-                  {/* tour reviews section end */}
+                  {/* Tour reviews section end */}
                 </div>
               </Col>
               <Col lg="4">

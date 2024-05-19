@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Input, Button, InputNumber, Select, message, Tag } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  Button,
+  InputNumber,
+  Select,
+  message,
+  Tag,
+} from "antd";
 import { BASE_URL } from "../../../utils/config";
 const { Option } = Select;
 
@@ -31,7 +40,9 @@ const HotelModal = ({ title, visible, onOk, onCancel, hotel }) => {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-      const url = hotel ? `${BASE_URL}/hotel/${hotel._id}` : `${BASE_URL}/hotel`;
+      const url = hotel
+        ? `${BASE_URL}/hotel/${hotel._id}`
+        : `${BASE_URL}/hotel`;
       const method = hotel ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -45,6 +56,8 @@ const HotelModal = ({ title, visible, onOk, onCancel, hotel }) => {
 
       if (response.ok) {
         message.success(`Hotel ${hotel ? "updated" : "created"} successfully`);
+        console.log(`${BASE_URL}/hotel/${hotel._id}`);
+        console.log(values);
         onOk(); // Close the modal on successful update or creation
         setTimeout(() => {
           window.location.reload();
@@ -63,14 +76,14 @@ const HotelModal = ({ title, visible, onOk, onCancel, hotel }) => {
   };
 
   const handleAddAmenity = (value) => {
-    const amenity = availableAmenities.find(a => a.name === value);
-    if (amenity && !selectedAmenities.some(a => a.name === value)) {
+    const amenity = availableAmenities.find((a) => a.name === value);
+    if (amenity && !selectedAmenities.some((a) => a.name === value)) {
       setSelectedAmenities([...selectedAmenities, amenity]);
     }
   };
 
   const handleRemoveAmenity = (name) => {
-    setSelectedAmenities(selectedAmenities.filter(a => a.name !== name));
+    setSelectedAmenities(selectedAmenities.filter((a) => a.name !== name));
   };
 
   return (
