@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, message } from "antd";
@@ -10,7 +10,7 @@ import useFetch from "../../../hooks/useFetch";
 const AdminHotel = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentHotel, setCurrentHotel] = useState(null);
-  const { refetch } = useFetch(`${BASE_URL}/hotels`);
+  
 
   const showModal = (hotel) => {
     setCurrentHotel(hotel);
@@ -20,7 +20,7 @@ const AdminHotel = () => {
   const handleOk = () => {
     setIsModalOpen(false);
     setCurrentHotel(null);
-    refetch();
+
   };
 
   const handleCancel = () => {
@@ -38,7 +38,10 @@ const AdminHotel = () => {
       });
       if (response.ok) {
         message.success("Hotel deleted successfully");
-        refetch();
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      
       }
     } catch (error) {
       console.error("Failed to delete hotel:", error);
@@ -47,7 +50,6 @@ const AdminHotel = () => {
 
   return (
     <div style={{ marginLeft: "40px" }}>
-     
       <div style={{ marginTop: "10px" }}>
         <Button
           style={{

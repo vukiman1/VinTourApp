@@ -2,6 +2,7 @@ import { Table, Button, Popconfirm } from "antd";
 import React from "react";
 import { BASE_URL } from "../../../utils/config";
 import useFetch from "../../../hooks/useFetch";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const UserTableComponent = ({ onEdit, onDelete }) => {
   const { data: users } = useFetch(`${BASE_URL}/users`);
@@ -45,14 +46,16 @@ const UserTableComponent = ({ onEdit, onDelete }) => {
       key: "action",
       render: (text, record) => (
         <>
-          <Button onClick={() => handleEdit(record)}>Update</Button>
+          <Button icon={<EditOutlined />} onClick={() => handleEdit(record)}>
+            Update
+          </Button>
           <Popconfirm
             title="Are you sure you want to delete this user?"
             onConfirm={() => handleDelete(record)}
             okText="Yes"
             cancelText="No"
           >
-            <Button danger className="ms-2">
+            <Button icon={<DeleteOutlined />} danger className="ms-2">
               Delete
             </Button>
           </Popconfirm>

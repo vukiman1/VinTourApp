@@ -36,9 +36,22 @@ const TourList = (item) => {
             {/* Giả sử ngày khởi hành được lưu trong item.item.startDate */}
           </div>
           <div>
-            <Text>{formatPrice(item.item.price)}</Text>
-            {" vnd"}
-            {/* Giả sử giá tour được lưu trong item.item.price */}
+            <Text strong>Trạng thái: </Text>
+            <Text>
+              {item.item.status === "Pending" ? (
+                <Text type="warning">Chờ xác nhận</Text>
+              ) : (
+                <Text type="success">Đã xác nhận</Text>
+              )}
+            </Text>{" "}
+            {/* Giả sử ngày khởi hành được lưu trong item.item.startDate */}
+          </div>
+          <div>
+            <b>
+              <Text>{formatPrice(item.item.price)}</Text>
+              {" vnd"}
+              {/* Giả sử giá tour được lưu trong item.item.price */}
+            </b>
           </div>
         </div>
       </Card>
