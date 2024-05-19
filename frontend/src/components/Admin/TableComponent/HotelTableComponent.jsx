@@ -6,13 +6,24 @@ import useFetch from "../../../hooks/useFetch";
 import HotelModal from "../AdminHotel/HotelModal";
 
 const HotelTableComponent = ({ onDelete }) => {
-  const [editHotel, setEditHotel] = useState(null); 
+  const [editHotel, setEditHotel] = useState(null);
 
   const columns = [
     {
       title: "Title Tour",
-      dataIndex: "titleTour", 
+      dataIndex: "titleTour",
       key: "titleTour",
+    },
+    {
+      title: "Image",
+      key: "image",
+      render: (text, record) => (
+        <img
+          src={record.image}
+          alt=""
+          style={{ width: "30px", height: "30px" }}
+        />
+      ),
     },
     {
       title: "Hotel Name",
@@ -26,7 +37,7 @@ const HotelTableComponent = ({ onDelete }) => {
         <>
           <Button
             icon={<EditOutlined />}
-            onClick={() => setEditHotel(record)} 
+            onClick={() => setEditHotel(record)}
             style={{ marginRight: 8 }}
           >
             Edit
@@ -46,22 +57,27 @@ const HotelTableComponent = ({ onDelete }) => {
   const { data: hotels, loading } = useFetch(`${BASE_URL}/hotel/`);
 
   const handleEditOk = () => {
-    setEditHotel(null); 
+    setEditHotel(null);
   };
 
   const handleEditCancel = () => {
-    setEditHotel(null); 
+    setEditHotel(null);
   };
 
   return (
     <>
-      <Table columns={columns} dataSource={hotels} loading={loading} rowKey="_id" />
-      {editHotel && ( 
+      <Table
+        columns={columns}
+        dataSource={hotels}
+        loading={loading}
+        rowKey="_id"
+      />
+      {editHotel && (
         <HotelModal
           title="Edit Hotel"
-          visible={!!editHotel} 
+          visible={!!editHotel}
           hotel={editHotel}
-          hotelAmenities={editHotel.amenities.map(amenity => amenity.name)} 
+          hotelAmenities={editHotel.amenities.map((amenity) => amenity.name)}
           onOk={handleEditOk}
           onCancel={handleEditCancel}
         />

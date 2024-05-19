@@ -2,9 +2,10 @@ import { Table, Button, message, Popconfirm } from "antd";
 import React from "react";
 import useFetch from "../../../hooks/useFetch";
 import { BASE_URL } from "../../../utils/config";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const OrderTableComponent = ({ onEdit, onDelete }) => {
-  const { data: orders, refetch } = useFetch(`${BASE_URL}/booking`);
+  const { data: orders } = useFetch(`${BASE_URL}/booking`);
 
   const handleEdit = (record) => {
     onEdit(record);
@@ -17,12 +18,10 @@ const OrderTableComponent = ({ onEdit, onDelete }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       });
       if (response.ok) {
         message.success("Order deleted successfully");
-        refetch();
-      } else {
-        message.error("Failed to delete order");
       }
     } catch (error) {
       console.error("Failed to delete order:", error);
@@ -47,6 +46,22 @@ const OrderTableComponent = ({ onEdit, onDelete }) => {
       key: "tourName",
     },
     {
+      title: "Status",
+      key: "status",
+      render: (text, record) => (
+        <>
+          {record.status === "Pending" && (
+            <>
+              <span style={{ color: "blue" }}>Pending</span>
+            </>
+          )}
+          {record.status === "Confirmed" && (
+            <span style={{ color: "green" }}>Confirmed</span>
+          )}
+        </>
+      ),
+    },
+    {
       title: "People",
       dataIndex: "guestSize",
       key: "guestSize",
@@ -61,14 +76,16 @@ const OrderTableComponent = ({ onEdit, onDelete }) => {
       key: "action",
       render: (text, record) => (
         <>
-          <Button onClick={() => handleEdit(record)}>Update</Button>
+          <Button icon={<EditOutlined />} onClick={() => handleEdit(record)}>
+            Update
+          </Button>
           <Popconfirm
             title="Are you sure you want to delete this order?"
             onConfirm={() => handleDelete(record)}
             okText="Yes"
             cancelText="No"
           >
-            <Button danger className="ms-1">
+            <Button icon={<DeleteOutlined />} danger className="ms-1">
               Delete
             </Button>
           </Popconfirm>

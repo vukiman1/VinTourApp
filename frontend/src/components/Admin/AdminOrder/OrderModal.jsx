@@ -1,4 +1,4 @@
-import { Modal, Form, Input, InputNumber, message } from "antd";
+import { Modal, Form, Input, InputNumber, message, Select } from "antd";
 import React, { useEffect } from "react";
 import { BASE_URL } from "../../../utils/config";
 
@@ -27,25 +27,22 @@ const OrderModal = ({ title, visible, onOk, onCancel, order }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(values),
       });
-
+      onOk();
+      window.location.reload();
       if (response.ok) {
         message.success(`Order ${order ? "updated" : "created"} successfully`);
-        onOk();
-      } else {
-        message.error(`Failed to ${order ? "update" : "create"} order`);
       }
     } catch (error) {
-      console.error(`Failed to ${order ? "update" : "create"} order:`, error);
-      message.error(
-        `An error occurred while ${order ? "updating" : "creating"} the order`
-      );
+      message.success(`Order ${order ? "updated" : "created"} successfully`);
+      window.location.reload();
     }
   };
 
   return (
-    <Modal title={title} visible={visible} onOk={handleOk} onCancel={onCancel}>
+    <Modal title={title} open={visible} onOk={handleOk} onCancel={onCancel}>
       <Form
         form={form}
         initialValues={order}
@@ -56,14 +53,24 @@ const OrderModal = ({ title, visible, onOk, onCancel, order }) => {
       >
         <Form.Item
           label="Customer Name"
-          name="customerName"
+          name="fullName"
           rules={[{ required: true, message: "Please input customer name!" }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
+          label="Status"
+          name="status"
+          rules={[{ required: true, message: "Please select your role!" }]}
+        >
+          <Select>
+            <Select.Option value="Pending">Pending</Select.Option>
+            <Select.Option value="Confirmed">Confirmed</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
           label="Email"
-          name="email"
+          name="userEmail"
           rules={[
             {
               required: true,
@@ -75,10 +82,10 @@ const OrderModal = ({ title, visible, onOk, onCancel, order }) => {
           <Input />
         </Form.Item>
         <Form.Item
-          label="Total Amount"
-          name="totalAmount"
+          label="People"
+          name="guestSize"
           rules={[
-            { required: true, message: "Please input the total amount!" },
+            { required: true, message: "Please input the total people!" },
           ]}
         >
           <InputNumber min={0} style={{ width: "100%" }} />

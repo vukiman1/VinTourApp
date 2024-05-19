@@ -25,7 +25,9 @@ const tourSchema = new mongoose.Schema(
     photo: {
       type: String,
       default: "",
+      required: true,
     },
+
     desc: [
       {
         day: {
@@ -38,10 +40,7 @@ const tourSchema = new mongoose.Schema(
         ],
       },
     ],
-    hotel: {
-      type: String,
-      trim: true,
-    },
+
     price: {
       type: Number,
       required: true,

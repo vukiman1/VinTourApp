@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, message } from "antd";
@@ -10,7 +10,7 @@ import useFetch from "../../../hooks/useFetch";
 const AdminHotel = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentHotel, setCurrentHotel] = useState(null);
-  const { refetch } = useFetch(`${BASE_URL}/hotels`);
+  const { refetch } = useFetch(`${BASE_URL}/hotel`);
 
   const showModal = (hotel) => {
     setCurrentHotel(hotel);
@@ -47,7 +47,6 @@ const AdminHotel = () => {
 
   return (
     <div style={{ marginLeft: "40px" }}>
-     
       <div style={{ marginTop: "10px" }}>
         <Button
           style={{

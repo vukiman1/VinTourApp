@@ -100,7 +100,11 @@ const BookingChart = () => {
         return acc;
       }, {});
 
-      const labels = Object.keys(groupedData);
+      const sortedDates = Object.keys(groupedData).sort((a, b) =>
+        moment(a).diff(moment(b))
+      );
+
+      const labels = sortedDates;
       const revenueData = labels.map((date) => groupedData[date].revenue);
       const bookingsData = labels.map((date) => groupedData[date].bookings);
 

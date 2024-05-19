@@ -2,9 +2,10 @@ import { Table, Button, Popconfirm } from "antd";
 import React from "react";
 import useFetch from "../../../hooks/useFetch";
 import { BASE_URL } from "../../../utils/config";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const TourTableComponent = ({ onEdit, onDelete }) => {
-  const { data: tours } = useFetch(`${BASE_URL}/tours`);
+  const { data: tours } = useFetch(`${BASE_URL}/tours/all/nopage`);
 
   const handleEdit = (record) => {
     onEdit(record);
@@ -16,10 +17,22 @@ const TourTableComponent = ({ onEdit, onDelete }) => {
 
   const columns = [
     {
+      title: "Image",
+      key: "title",
+      render: (record) => (
+        <img
+          src={record.photo}
+          alt=""
+          style={{ width: "30px", height: "30px" }}
+        />
+      ),
+    },
+    {
       title: "Name",
       dataIndex: "title",
       key: "title",
     },
+
     {
       title: "City",
       dataIndex: "city",
@@ -36,14 +49,16 @@ const TourTableComponent = ({ onEdit, onDelete }) => {
       key: "action",
       render: (text, record) => (
         <>
-          <Button onClick={() => handleEdit(record)}>Update</Button>
+          <Button icon={<EditOutlined />} onClick={() => handleEdit(record)}>
+            Update
+          </Button>
           <Popconfirm
             title="Are you sure you want to delete this tour?"
             onConfirm={() => handleDelete(record)}
             okText="Yes"
             cancelText="No"
           >
-            <Button danger className="ms-1">
+            <Button icon={<DeleteOutlined />} danger className="ms-1">
               Delete
             </Button>
           </Popconfirm>
