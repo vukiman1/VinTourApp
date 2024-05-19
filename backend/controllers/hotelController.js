@@ -3,6 +3,7 @@ import Hotel from "../models/Hotel.js";
 
 //create new hotel
 export const createHotel = async (req, res) => {
+  const newHotel = new Hotel(req.body);
   try {
     const existingHotel = await Hotel.findOne({
       titleTour: req.body.titleTour,
@@ -13,7 +14,6 @@ export const createHotel = async (req, res) => {
         message: "Mỗi tour chỉ có 1 khách sạn ",
       });
     }
-    const newHotel = new Hotel(req.body);
 
     const savedHotel = await newHotel.save();
     res
@@ -35,7 +35,7 @@ export const createHotel = async (req, res) => {
 };
 //upadate hotel
 export const updateHotel = async (req, res) => {
-  const id = req.params.id;
+  const {id} = req.params.id;
   try {
     const updatedHotel = await Hotel.findByIdAndUpdate(
       id,
@@ -61,22 +61,42 @@ export const updateHotel = async (req, res) => {
 };
 //delete Hotel
 export const deleteHotel = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params; // Destructuring id from req.params
+
+  if (!id) {
+    return res.status(400).json({
+      success: false,
+      message: "ID của khách sạn không được cung cấp.",
+    });
+  }
+
   try {
-    await Hotel.findByIdAndDelete(id);
-    res
-      .status(200)
-      .json({ success: true, message: "Xóa khách sạn thành công" });
-  } catch (err) {
-    res
-      .status(500)
-      .json({
+    const hotel = await Hotel.findById(id);
+
+    if (!hotel) {
+      return res.status(404).json({
         success: false,
-        message: "Xóa khachs sạn thất bại!",
-        error: err.message,
+        message: "Không tìm thấy khách sạn với ID này.",
       });
+    }
+
+    await Hotel.findByIdAndDelete(id);
+    res.status(200).json({
+      success: true,
+      message: "Xóa khách sạn thành công",
+    });
+  } catch (err) {
+    console.error("Error deleting hotel:", err);
+    res.status(500).json({
+      success: false,
+      message: "Xóa khách sạn thất bại!",
+      error: err.message,
+    });
   }
 };
+
+export default deleteHotel;
+
 
 //get Single hotel
 export const getSingleHotel = async (req, res) => {

@@ -4,6 +4,7 @@ import {
   UserOutlined,
   ShoppingOutlined,
   FundOutlined,
+  EnvironmentOutlined,
   
 } from "@ant-design/icons";
 
@@ -15,7 +16,6 @@ import AdminOrder from "../components/Admin/AdminOrder/AdminOrder";
 import AdminRevenue from "../components/Admin/AdminRevenue/AdminRevenue";
 import HeaderComponent from "../components/Admin/AdminHeader/HeaderComponent";
 import AdminHotel from "../components/Admin/AdminHotel/AdminHotel";
-
 const items = [
   {
     key: "1",
@@ -45,6 +45,7 @@ const items = [
     icon:<MoonOutlined />,
     label:"Hotel"
   },
+  
 ];
 
 const Admin = () => {

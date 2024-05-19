@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Input, Button, InputNumber, Select } from "antd";
+import { Modal, Form, Input, Button, InputNumber, Select, message, Tag } from "antd";
 import { BASE_URL } from "../../../utils/config";
-import { message } from "antd";
 const { Option } = Select;
 
 const availableAmenities = [
@@ -15,39 +14,24 @@ const availableAmenities = [
   { name: "Đã bao gồm thuế và phí", icon: "/icon/tax.png" },
 ];
 
-const HotelModal = ({
-  title,
-  visible,
-  onOk,
-  onCancel,
-  hotel,
-  hotelAmenities,
-}) => {
+const HotelModal = ({ title, visible, onOk, onCancel, hotel }) => {
   const [form] = Form.useForm();
   const [selectedAmenities, setSelectedAmenities] = useState([]);
 
   useEffect(() => {
     if (hotel) {
       form.setFieldsValue(hotel);
-      setSelectedAmenities(hotel.amenities.map((a) => a.name));
+      setSelectedAmenities(hotel.amenities || []);
     } else {
       form.resetFields();
       setSelectedAmenities([]);
     }
   }, [hotel, form]);
 
-  useEffect(() => {
-    setSelectedAmenities(hotelAmenities);
-  }, [hotelAmenities]);
-
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-      console.log(values);
-
-      const url = hotel
-        ? `${BASE_URL}/hotel/${hotel._id}`
-        : `${BASE_URL}/hotel`;
+      const url = hotel ? `${BASE_URL}/hotel/${hotel._id}` : `${BASE_URL}/hotel`;
       const method = hotel ? "PUT" : "POST";
 
       const response = await fetch(url, {
@@ -56,16 +40,21 @@ const HotelModal = ({
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, amenities: selectedAmenities }),
       });
 
-      onOk(); // Close the modal on successful update or creation
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-      message.success(`User ${hotel ? "updated" : "created"} successfully`);
+      if (response.ok) {
+        message.success(`Hotel ${hotel ? "updated" : "created"} successfully`);
+        onOk(); // Close the modal on successful update or creation
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      } else {
+        message.error(`Failed to ${hotel ? "update" : "create"} hotel`);
+      }
     } catch (error) {
-      console.error(`Failed to ${hotel ? "update" : "create"} user:`, error);
+      console.error(`Failed to ${hotel ? "update" : "create"} hotel:`, error);
+      message.error(`Failed to ${hotel ? "update" : "create"} hotel`);
     }
   };
 
@@ -73,8 +62,15 @@ const HotelModal = ({
     onCancel();
   };
 
-  const handleChangeAmenities = (selectedValues) => {
-    setSelectedAmenities(selectedValues);
+  const handleAddAmenity = (value) => {
+    const amenity = availableAmenities.find(a => a.name === value);
+    if (amenity && !selectedAmenities.some(a => a.name === value)) {
+      setSelectedAmenities([...selectedAmenities, amenity]);
+    }
+  };
+
+  const handleRemoveAmenity = (name) => {
+    setSelectedAmenities(selectedAmenities.filter(a => a.name !== name));
   };
 
   return (
@@ -133,16 +129,15 @@ const HotelModal = ({
         <Form.Item
           label="Photo Link"
           name="image"
-          rules={[{ required: true, message: "Nhập link anhr!" }]}
+          rules={[{ required: true, message: "Nhập link ảnh!" }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="amenities" label="Amenities">
+        <Form.Item label="Amenities">
           <Select
-            mode="multiple"
+            showSearch
             placeholder="Select amenities"
-            onChange={handleChangeAmenities}
-            value={selectedAmenities}
+            onChange={handleAddAmenity}
           >
             {availableAmenities.map((amenity) => (
               <Option key={amenity.name} value={amenity.name}>
@@ -155,6 +150,22 @@ const HotelModal = ({
               </Option>
             ))}
           </Select>
+          <div style={{ marginTop: 10 }}>
+            {selectedAmenities.map((amenity) => (
+              <Tag
+                key={amenity.name}
+                closable
+                onClose={() => handleRemoveAmenity(amenity.name)}
+              >
+                <img
+                  src={amenity.icon}
+                  alt={amenity.name}
+                  style={{ width: 20, marginRight: 8 }}
+                />
+                {amenity.name}
+              </Tag>
+            ))}
+          </div>
         </Form.Item>
       </Form>
     </Modal>

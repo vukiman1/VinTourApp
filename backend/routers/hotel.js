@@ -15,7 +15,7 @@ router.post("/", createHotel);
 //update hotel
 router.put("/:id", updateHotel);
 // delete hotel
-router.delete("/:id", verifyAdmin, deleteHotel);
+router.delete("/:id", deleteHotel);
 //get singlehotel
 router.get("/:id", getSingleHotel);
 //get Hotels by tour id
