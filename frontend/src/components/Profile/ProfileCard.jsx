@@ -1,19 +1,20 @@
-import React from "react";
-import { Avatar, Card, Typography, Row, Col } from "antd";
-import ava from '../../assets/images/user.png'
+import React, { useContext } from "react";
+import { Card, Typography, Row, Col } from "antd";
+import ava from "../../assets/images/user.png";
 import {
-  UserOutlined,
   PhoneOutlined,
   MailOutlined,
   EnvironmentOutlined,
-  CalendarOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 import "./ProfileCard.css"; // Import CSS file
+import { AuthContext } from "../../context/AuthContext";
 
 const { Meta } = Card;
 const { Title, Text } = Typography;
 
 const ProfileCard = (data) => {
+  const { role } = useContext(AuthContext);
   return (
     <div className="profile-container">
       <Card
@@ -43,10 +44,9 @@ const ProfileCard = (data) => {
               </Text>
             </Col>
             <Col span={16}>
-              <Text>Chưa có </Text>
+              <Text>{data.user.phone} </Text>
               <i className="ms-2 ri-edit-line"></i>
             </Col>
-            
           </Row>
           <Row className="info-row" gutter={[16, 16]}>
             <Col span={8}>
@@ -66,24 +66,23 @@ const ProfileCard = (data) => {
               </Text>
             </Col>
             <Col span={16}>
-              <Text>Chưa có </Text>
+              <Text>{data.user.address} </Text>
               <i className=" ms-2 ri-edit-line"></i>
             </Col>
           </Row>
           <Row className="info-row" gutter={[16, 16]}>
             <Col span={8}>
               <Text strong>
-                <CalendarOutlined /> Ngày sinh:
+                <UserSwitchOutlined /> Role:
               </Text>
             </Col>
             <Col span={16}>
-              <Text>Chưa có </Text>
+              <Text>{role} </Text>
               <i className="ms-2 ri-edit-line"></i>
             </Col>
           </Row>
         </div>
-        <div>
-        </div>
+        <div></div>
       </Card>
     </div>
   );

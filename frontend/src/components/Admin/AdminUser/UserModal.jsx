@@ -34,12 +34,11 @@ const UserModal = ({ title, visible, onOk, onCancel, user }) => {
       });
 
       if (response.ok) {
-        message
-          .success(`User ${user ? "updated" : "created"} successfully`)
-          .then(() => {
-            window.location.reload();
-          });
         onOk(); // Close the modal on successful update or creation
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+        message.success(`User ${user ? "updated" : "created"} successfully`);
       }
     } catch (error) {
       console.error(`Failed to ${user ? "update" : "create"} user:`, error);

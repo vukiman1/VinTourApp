@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { WrapperHeader } from "./style";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, message } from "antd";
-import useFetch from "../../../hooks/useFetch";
 import { BASE_URL } from "../../../utils/config";
 import TourTableComponent from "../TableComponent/TourTableComponent";
 import TourModal from "./TourModal";
@@ -10,7 +9,6 @@ import TourModal from "./TourModal";
 const AdminTour = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTour, setCurrentTour] = useState(null);
-  const { refetch } = useFetch(`${BASE_URL}/tours`);
 
   const showModal = (tour) => {
     setCurrentTour(tour);
@@ -20,7 +18,6 @@ const AdminTour = () => {
   const handleOk = () => {
     setIsModalOpen(false);
     setCurrentTour(null);
-    refetch();
   };
 
   const handleCancel = () => {
@@ -35,10 +32,10 @@ const AdminTour = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       });
       if (response.ok) {
         message.success("Tour deleted successfully");
-        refetch();
       }
     } catch (error) {
       console.error("Failed to delete tour:", error);
