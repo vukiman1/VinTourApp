@@ -10,7 +10,7 @@ import useFetch from "../../../hooks/useFetch";
 const AdminHotel = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentHotel, setCurrentHotel] = useState(null);
-  const { refetch } = useFetch(`${BASE_URL}/hotel`);
+  
 
   const showModal = (hotel) => {
     setCurrentHotel(hotel);
@@ -20,7 +20,7 @@ const AdminHotel = () => {
   const handleOk = () => {
     setIsModalOpen(false);
     setCurrentHotel(null);
-    refetch();
+
   };
 
   const handleCancel = () => {
@@ -38,7 +38,10 @@ const AdminHotel = () => {
       });
       if (response.ok) {
         message.success("Hotel deleted successfully");
-        refetch();
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      
       }
     } catch (error) {
       console.error("Failed to delete hotel:", error);
