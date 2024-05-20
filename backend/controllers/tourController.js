@@ -21,7 +21,6 @@ export const createTour = async (req, res) => {
 //update tour
 export const updateTour = async (req, res) => {
   const id = req.params.id;
-  console.log(req.body);
 
   try {
     const updatedTour = await Tour.findByIdAndUpdate(

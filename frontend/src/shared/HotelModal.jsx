@@ -57,11 +57,13 @@ const HotelModal = ({ isOpen, toggle, hotelInfo }) => {
       </ModalBody>
         <ModalFooter>
           <div className="body-info bg-light">
-            <div>
+            <div className="bodycontent">
             <strong>Đánh giá: </strong>{renderStars(hotelInfo?.rating)}
             </div>
-            <p><strong>Địa chỉ:</strong> {hotelInfo?.address}</p>
-            <div className="amenities">
+            <div>
+            <p className="bodycontent"><strong>Địa chỉ:</strong> {hotelInfo?.address}</p>
+            </div>
+            <div className="bodycontent">
               {hotelInfo?.amenities ? renderAmenities(hotelInfo.amenities) : <p>Không có tiện ích nào</p>}
             </div>
           </div>

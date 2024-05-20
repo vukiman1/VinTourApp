@@ -35,6 +35,10 @@ const Header = () => {
     const userMenu = document.getElementById("user-menu");
     userMenu.classList.toggle("show");
   };
+  const NottoggleUserMenu = () => {
+    const userMenu = document.getElementById("user-menu");
+    userMenu.classList.toggle("hidden");
+  };
 
   return (
     <header className="header">
@@ -80,7 +84,8 @@ const Header = () => {
                     <div
                       className="mb-0"
                       id="user-menu-trigger"
-                      onClick={toggleUserMenu}
+                      onMouseEnter={toggleUserMenu}
+                      onMouseLeave={NottoggleUserMenu}
                     >
                       <UserOutlined
                         style={{ fontSize: "25px", marginRight: "6px" }}

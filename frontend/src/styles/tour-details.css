@@ -159,3 +159,7 @@
     font-weight: 700 !important;
     font-size: 1.1rem;
 }
+.select-hotel {
+    color: var(--text-color) !important;
+    text-decoration: underline;
+}

@@ -115,3 +115,7 @@
   justify-content: flex-start; 
   width: 100%;
 }
+.modal-footer .bodycontent
+{
+  margin-left: -100%;
+}
