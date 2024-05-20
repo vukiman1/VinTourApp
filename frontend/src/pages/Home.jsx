@@ -77,7 +77,8 @@ const Home = () => {
               <h5 className="services_subtitle">Những gì chúng tôi phục vụ</h5>
               <h2 className="services_title">Tự hào cung cấp điều tốt nhất</h2>
             </Col>
-            <ServiceList />
+              <ServiceList />
+            
           </Row>
         </Container>
       </section>
@@ -102,7 +103,6 @@ const Home = () => {
             <Col lg="6">
               <div className="experience_content">
                 <Subtitle subtitle={"Kinh nghiệm"} />
-
                 <h2>
                   Với tất cả kinh nghiệm <br /> chúng tôi sẽ phục vụ bạn{" "}
                 </h2>
