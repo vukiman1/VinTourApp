@@ -42,8 +42,6 @@ const TourDetails = () => {
     maxGroupSize,
   } = tour || {};
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
   const { totalRating, avgRating } = calculateAvgRating(reviews || []);
 
   // Submit review
@@ -163,7 +161,7 @@ const TourDetails = () => {
                               <div
                                 key={hotel._id}
                                 className="hotel-option"
-                                style={{ cursor: "pointer"}}
+                                style={{ cursor: "pointer" }}
                                 onClick={() => handleHotelHover(hotel.name)}
                               >
                                 <b>{hotel.name}</b>
@@ -198,7 +196,7 @@ const TourDetails = () => {
                     <h4>Reviews ({reviews?.length} reviews)</h4>
                     <Form onSubmit={submitHandler}>
                       <div className="rating_group d-flex align-items-center gap-3 mb-4">
-                        {[...Array(5)].map((_, i) => {  
+                        {[...Array(5)].map((_, i) => {
                           const ratingValue = i + 1;
                           return (
                             <span
