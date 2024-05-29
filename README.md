@@ -1,4 +1,4 @@
-Home pahe
+Home page
 ![image](https://github.com/vukiman1/VinTourApp/assets/74492726/6419c944-fb2f-44d6-9f11-0d87cad66050)
 
 Tour Info
