@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { notification } from "antd";
 import "../styles/login.css";
 
-import LoginImg from "../assets/images/dulichviet.jpeg";
 import usericon from "../assets/images/user.png";
 
 import { AuthContext } from "../context/AuthContext";
