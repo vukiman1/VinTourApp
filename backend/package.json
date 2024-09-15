@@ -11,6 +11,12 @@
     "start": "node index.js",
     "start-dev": "nodemon index.js"
   },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "vercel-sapper"
+    }
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
