@@ -4,6 +4,9 @@
   "description": "",
   "type": "module",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node index.js",
     "start-dev": "nodemon index.js"
@@ -22,9 +25,6 @@
     "mongoose": "^8.3.3",
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
-    "nodemon": "^3.1.0"
-  },
-  "devDependencies": {
-    "gh-pages": "^6.1.1"
+    "nodemon": "^3.1.1"
   }
 }

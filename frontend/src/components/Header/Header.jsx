@@ -3,7 +3,7 @@ import { Container, Row, Button } from "reactstrap";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
 
-import logo from "../../assets/images/logo1.png";
+import logo from "../../assets/images/Logo.png";
 import "./header.css";
 
 import { AuthContext } from "../../context/AuthContext";
