@@ -23,7 +23,7 @@ const corsOptions = {
 mongoose.set("strictQuery", false);
 const connect = async () => {
   try {
-    await mongoose.connect('mongodb+srv://anvuit734:kiman0102@cluster0.nly7dnp.mongodb.net/Vintour?retryWrites=true&w=majority&appName=Cluster0', {});
+    await mongoose.connect(process.env.MONGO_URI, {});
     console.log("-------MongoDB database connected--------");
   } catch (err) {
     console.log(err);
